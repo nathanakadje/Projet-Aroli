@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\InformationController;
+use App\Http\Controllers\ActionController;
+
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,15 +33,31 @@ Route::post('/login/traitement', [UserController::class, 'login_form']);
 //Return the dashboard view
 Route::get('/dashboard', function(){ return view('espacemembre'); });
 
-//*************************Return dashbord and form view */
+//*************************Return dashbord and form view ***************************************/
 Route::get('/addsender', function () {
     return view('form');
 })->name('form');
 Route::post('/addsender/store',[RegisterController::class, 'store']);
 Route::get('/dashboard', [RegisterController::class, 'dashboard']);
+//*************************Return detail  view ***************************************/
+// Route::get('/searchsender', [SearchController::class, 'search']);
+// Route::get('/searchsender', [SearchController::class, 'dashboard']);
+// Route::get('/searchsender/{id}', [SearchController::class, 'show']);
+// Route::get('/searchsender', [SearchController::class, 'sender']);
+// Route::get('/sender', [SenderController::class, 'index']);
 
-Route::get('/searchsender', [SearchController::class, 'searchsender']);
-Route::get('/searchsender', [SearchController::class, 'dashboard']);
-Route::get('/searchsender/{id}', [SearchController::class, 'show']);
+Route::post('/search', [SearchController::class, 'searchs'])->name('search.searchs');
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/search/{id}/details', [SearchController::class, 'show'])->name('search.show');
+Route::get('/search/{type}', [SearchController::class, 'export'])->name('search.export');
 
+
+
+
+Route::get('/actions', [ActionController::class, 'dashboard']);
+Route::get('/actions', [ActionController::class, 'index']);
+// Route::get('/actions/search', [ActionController::class, 'search']);
+Route::get('/actions/{id}', [ActionController::class, 'show']);
+Route::put('/actions/{id}', [ActionController::class, 'update']);
+Route::delete('/actions/{id}', [ActionController::class, 'destroy']);
 

@@ -10,36 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    //
-    
-    public function index()
-    {
-       $users = registries::all(); 
-          
-       // Return Json Response
-       return response()->json([
-            'results' => $users
-       ],200);
-    }
-
-    public function show($id)
-    {
-       // User Detail 
-       $users = registries::find($id);
-       if(!$users){
-         return response()->json([
-            'message'=>'User Not Found.'
-         ],404);
-       }
-            // Return Json Response
-       return response()->json([
-          'users' => $users
-       ],200);
-
-       
-    }
-    
-
 //  ********************************************************************************************  
     public function dashboard()
     {
@@ -65,6 +35,8 @@ class RegisterController extends Controller
                 $rules['date_valid'] = 'nullable|date';
                 $rules['commentaire'] = 'nullable|string';
             }
+            
+            
             $messages = [
                 'name.required' => 'Le nom est obligatoire',
                 'name.max' => 'Le nom saisie depasse les caractère max(11) ',

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\admins;
+use App\Models\registries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
     public function form_login()
     {
         return  view('login');
@@ -55,4 +57,7 @@ class UserController extends Controller
             return back()->with('status', 'désole vous n\'avez pas de compte client.');
         }
     }
+
+    // *******************************************************
+
 }

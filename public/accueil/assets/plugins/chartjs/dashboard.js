@@ -97,3 +97,139 @@ setTimeout(function () {
 	});
 
 }, 1000)
+
+// ***********************************btn search page search
+
+const searchBtn = document.getElementById('searchBtn');
+const searchWindow = document.getElementById('searchWindow');
+const closeBtn = document.getElementById('closeBtn');// Close search window
+// Open search window
+searchBtn.addEventListener('click', () => {
+    searchWindow.style.display = 'flex';
+});
+
+closeBtn.addEventListener('click', () => {
+    searchWindow.style.display = 'none';
+    searchResult.innerHTML = ''; // Clear results on close
+});
+
+ // Fonction d'exportation des données (format CSV)
+ document.getElementById('exportBtn').addEventListener('click', () => {
+            const rows = document.querySelectorAll('.result tr');
+            let csvContent = "data:text/csv;charset=utf-8,";
+
+            rows.forEach(row => {
+                let cols = row.querySelectorAll('td, th');
+                let rowData = Array.from(cols).map(col => col.innerText).join(",");
+                csvContent += rowData + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "exported_data.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+// *********************************************************************************************
+
+document.addEventListener('DOMContentLoaded', function() {
+	// Initialisation des dropdowns Bootstrap
+	var dropdowns = document.querySelectorAll('.dropdown-toggle');
+	dropdowns.forEach(function(dropdown) {
+		new bootstrap.Dropdown(dropdown);
+	});
+
+	// Ajout d'une animation au hover (optionnel)
+	const exportBtn = document.querySelector('#exportDropdown');
+	if (exportBtn) {
+		exportBtn.addEventListener('mouseover', function() {
+			this.classList.add('shadow-sm');
+		});
+		exportBtn.addEventListener('mouseout', function() {
+			this.classList.remove('shadow-sm');
+		});
+	}
+
+	// Gestion du click sur les options d'export
+	document.querySelectorAll('.dropdown-item').forEach(function(item) {
+		item.addEventListener('click', function(e) {
+			// Ajout d'un effet de chargement lors du clic
+			const btn = document.querySelector('#exportDropdown');
+			const originalText = btn.innerHTML;
+			btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Exportation...';
+			
+			// Restauration du texte original après 2 secondes
+			setTimeout(function() {
+				btn.innerHTML = originalText;
+			}, 2000);
+		});
+	});
+});
+
+// *************************************************************************************************************
+$(document).ready(function() {
+	$('.view-details').on('click', function() {
+		var id = $(this).data('id');
+
+		$.ajax({
+			url: '/search/' + id + '/details',
+			method: 'GET',
+			success: function(data) {
+				var formattedDate = new Date(data.created_at).toLocaleDateString('fr-FR', {
+				year: 'numeric',
+				month: 'long', 
+				day: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit'
+			});
+			var formatted= new Date(data.updated_at).toLocaleDateString('fr-FR', {
+				year: 'numeric',
+				month: 'long', 
+				day: 'numeric',
+				hour: '2-digit',
+				minute: '2-digit'
+			});
+				var detailsHtml = `
+					<table class="table">
+			
+						<tr>
+							<th><strong>Name</strong></th>
+							<td>${data.name}</td>
+						</tr>
+						<tr>
+							<th><strong>Operator</strong></th>
+							<td>${data.operator}</td>
+						</tr>
+						<tr>
+							<th><strong>Status</strong></th>
+							<td>${data.status}</td>
+						</tr>
+						<tr>
+							<th><strong>Country</strong></th>
+							<td>${data.country}</td>
+						</tr>
+						<tr>
+							<th><strong>Created At</strong></th>
+							<td>${formattedDate}</td>
+						</tr>
+						<tr>
+							<th><strong>Commentaire</strong></th>
+							<td>${data.commentaire}</td>
+						</tr>
+						<tr>
+							<th><strong>Updated_At</strong></th>
+							<td>${formatted}</td>
+						</tr>
+					</table>
+				`;
+				
+				$('#modalDetails').html(detailsHtml);
+			},
+			error: function() {
+				$('#modalDetails').html('<p>Erreur de chargement des détails</p>');
+			}
+		});
+	});
+});

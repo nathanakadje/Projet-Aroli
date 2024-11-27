@@ -5,15 +5,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>W3Admin Dashboard - Free Dashboard for HTML5/w3css by W3MIX</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://smsrouter.letexto.com/css/prismjs.bundle.css" rel="stylesheet"  type="text/css" />
-  {{-- <link href="https://smsrouter.letexto.com/css/style.bundle.css" rel="stylesheet"  type="text/css" /> --}}
   <link href="https://smsrouter.letexto.com/css/plugins.bundle.css" rel="stylesheet"  type="text/css" />
   <link href="https://smsrouter.letexto.com/css/datatables.bundle.css" rel="stylesheet"  type="text/css" />
   <link href="https://smsrouter.letexto.com/css/style.bundle.css" rel="stylesheet"  type="text/css" />
+ 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="./accueil/assets/icons/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./accueil/assets/css/w3pro-4.13.css">
@@ -32,16 +34,16 @@
         <div class="admin-logo w3-bar-item w3-hide-medium w3-hide-small">
           <h5 class="" style="line-height:1; margin:0!important; font-weight:300">
             <a href="./accueil/index.html" class="w3-button w3-bold">
-              <img src="./accueil/assets/admin-logo.png" alt="w3mix" class="w3-image" width="26"> Aroli Senders </a>
+              <img src="./accueil/assets/admin-logo.png" alt="w3mix" class="w3-image" width="26">Aroli Sender </a>
           </h5>
         </div>
         <label for="sidebar-control" class="w3-button w3-large w3-opacity-min"><i class="fa fa-bars"></i></label>
-        <div class="w3-container w3-display-container" style="width:40%">
+        {{-- <div class="w3-container w3-display-container" style="width:15%">
           <div class="w3-display-right w3-padding-small w3-margin-right" onclick="this.parentNode.children[1].focus()">
             <i class="fa fa-search w3-opacity-max"></i>
           </div>
           <input type="text" class="w3-input w3-border w3-round w3-small w3-padding-small w3-gray-lighter w3-show-inline-block" placeholder="Enter keywords">
-        </div>
+        </div> --}}
         <div class="w3-right">
           <button type="button" class="w3-button w3-large w3-opacity-min"><i class="fa fa-envelope-open"></i></button>
           <button type="button" class="w3-button w3-large w3-opacity-min"><i class="fa fa-bell"></i></button>
@@ -67,27 +69,20 @@
         <span class="w3-bar-item w3-padding w3-small w3-opacity" style="margin-top:8px"> MAIN NAVIGATION </span>
         <a href="/dashboard" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-bar-chart"></i>&nbsp; Dashboard </a>
-        <a href="/searchsender" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-          <i class="fa fa-fw fa-fire"></i>&nbsp; UI Icons </a>
+        <a href="/search" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
+          <i class="fa fa-fw fa-fire"></i>&nbsp; Senders</a>
           
           <a href="{{ route('form') }}" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-            <i class="fa fa-fw fa-edit"></i>&nbsp;Forms </a>
+            <i class="fa fa-fw fa-edit"></i>&nbsp;Formulaire </a>
         
-        <a href="./accueil/tables.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-          <i class="fa fa-fw fa-table"></i>&nbsp; Tables </a>
+        <a href="/actions" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
+          <i class="fa fa-fw fa-table"></i>&nbsp; Action </a>
         <a href="./accueil/profile.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-user-circle"></i>&nbsp; Profile </a>
         <a href="./accueil/login.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-lock"></i>&nbsp; Login </a>
         <a href="./accueil/register.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-sign-in"></i>&nbsp; Registration </a>
-        <span class="w3-bar-item w3-padding w3-small w3-opacity"> LABELS </span>
-        <a href="#dashboard" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-          <i class="fa fa-fw fa-coffee w3-text-danger"></i>&nbsp; Important </a>
-        <a href="#dashboard" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-          <i class="fa fa-fw fa-circle-o-notch w3-text-success"></i>&nbsp; Warning </a>
-        <a href="#dashboard" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-          <i class="fa fa-fw fa-share-alt w3-text-info"></i>&nbsp; Information </a>
       </div>
     </nav>
   @yield('dashboard')
@@ -99,95 +94,256 @@
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/plugins.bundle.js"></script>
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/datatables.bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+  
   <script src="./accueil/assets/plugins/chartjs/Chart.min.js"></script>
   <script src="./accueil/assets/plugins/chartjs/dashboard.js"></script>
 
-  {{-- <script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+
+<script>
+    function showOptions(userId) {
+        document.getElementById(`optionsMenu${userId}`).style.display = 'block';
+    }
+
+    function openEditModal(userId) {
+        // Récupérer les données de l'utilisateur
+        fetch(`/actions/${userId}`)
+            .then(response => response.json())
+            .then(user => {
+                document.getElementById('userId').value = user.id;
+                document.getElementById('name').value = user.name;
+                document.getElementById('country').value = user.country;
+                document.getElementById('status').value = user.status;
+                document.getElementById('operator').value = user.operator;
+                
+                // Afficher la modale
+                document.getElementById('editModal').style.display = 'block';
+            });
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    function saveChanges() {
+        const userId = document.getElementById('userId').value;
+        const data = {
+            _token: '{{ csrf_token() }}',
+            name: document.getElementById('name').value,
+            country: document.getElementById('country').value,
+            status: document.getElementById('status').value,
+            operator: document.getElementById('operator').value
+        };
+
+        fetch(`/actions/${userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Mise à jour réussie !");
+                closeEditModal();
+                location.reload();
+            } else {
+                alert("Erreur lors de la mise à jour.");
+            }
+        });
+    }
+
+    function deleteUser(userId) {
+        if (confirm("are you sure?")) {
+            fetch(`/actions/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Sender deleted !");
+                    location.reload();
+                } else {
+                    alert("Erreur lors de la suppression.");
+                }
+            });
+        }
+    }
+</script>
+{{-- <script>
+    // Fonction de filtrage
+    document.getElementById('search').addEventListener('input', function () {
+        const filter = this.value.toLowerCase(); // Convertir le texte en minuscules
+        const rows = document.querySelectorAll('#dataTable tr'); // Sélectionner toutes les lignes
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+
+            // Vérifier si une des colonnes contient le texte recherché
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(filter)) {
+                    match = true;
+                }
+            });
+
+            // Afficher ou masquer la ligne en fonction du résultat
+            row.style.display = match ? '' : 'none';
+        });
+    });
+</script> --}}
+
+
+{{-- <script>
+    document.getElementById('showSearchForm').addEventListener('click', function() {
+        const searchForm = document.getElementById('searchForm');
+        // Toggle visibility
+        searchForm.style.display = searchForm.style.display === 'none' ? 'block' : 'none';
+    });
+</script> --}}
+
+<!-- Ajoutez ce script à la fin de votre vue, juste avant la fermeture de la balise body -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Éléments du DOM
+    const toggleSearchBtn = document.getElementById('toggleSearchBtn');
+    const closeSearchBtn = document.getElementById('closeSearchBtn');
+    const searchForm = document.getElementById('searchForm');
+    const recordSearchForm = document.getElementById('recordSearchForm');
+    const resetSearchBtn = document.getElementById('resetSearchBtn');
+    const resultsTable = document.getElementById('resultsTable');
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.getElementById('tableBody');
+    const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+    searchInput.addEventListener('keyup', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    toggleSearchBtn.addEventListener('click', function() {
+        searchForm.style.display = 'block';
+        searchForm.style.opacity = '0';
+        setTimeout(() => {
+            searchForm.style.transition = 'opacity 0.3s ease-in-out';
+            searchForm.style.opacity = '1';
+        }, 10);
+    });
+            // Animation simple
+            if (isHidden) {
+                searchForm.style.opacity = '0';
+                setTimeout(() => {
+                    searchForm.style.transition = 'opacity 0.3s ease-in-out';
+                    searchForm.style.opacity = '1';
+                }, 10);
             }
         });
 
-        $('.view-details').click(function() {
-            const id = $(this).data('id');
-            
-            $.ajax({
-                url: `/searchsender/{id}`,
-                method: 'GET',
-                success: function(response) {
-                    $('#modal-created').text(response.created_at);
-                    $('#modal-name').text(response..name);
-                    $('#modal-country').text(response..country);
-                    
-                    let statusBadge;
-                    switch(response.status) {
-                        case 'close':
-                            statusBadge = `<span class="badge bg-danger text-white">${response.status}</span>`;
-                            break;
-                        case 'pending':
-                            statusBadge = `<span class="badge bg-warning text-dark">${response.status}</span>`;
-                            break;
-                        default:
-                            statusBadge = `<span class="badge bg-success text-white">${response..status}</span>`;
-                    }
-                    $('#modal-status').html(statusBadge);
-                    
-                    $('#modal-date-sub').text(response.date_sub);
-                    $('#modal-date-valid').text(response.date_valid || '-');
-                    $('#modal-commentaire').text(response.sender.commentaire || 'Aucun commentaire');
-                    
-                    $('#detailsModal').modal('show');
-                },
-                error: function() {
-                    alert('Une erreur est survenue lors du chargement des détails.');
-                }
-            });
-        });
+        // Fermer le formulaire
+    closeSearchBtn.addEventListener('click', function() {
+        searchForm.style.opacity = '0';
+        setTimeout(() => {
+            searchForm.style.display = 'none';
+        }, 300);
     });
-    </script> --}}
-<script>
-$(document).ready(function() {
-    $('#recordModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget); 
-        var recordId = button.data('id'); 
-        
-        // Charge les détails de l'enregistrement via AJAX
-        $.get('/records/' + recordId, function(data) {
-            $('#recordModal .modal-body').html(data);
-        });
+    
+        // Réinitialisation du formulaire
+        resetSearchBtn.addEventListener('click', function() {
+        recordSearchForm.reset();
+        // Optionnel : vider aussi les résultats
+        resultsTable.innerHTML = '<div class="alert alert-info">Veuillez effectuer une recherche</div>';
     });
-});
-</script>
 
-  {{-- <script type="text/javascript"> --}}
-    {{-- toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toastr-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "1800000",
-        "extendedTimeOut": "600000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
 
-    function showSmppcEvent(item) {
-        if(item.includes("Stopped")){
-            toastr.error(item);
-        }else{
-            toastr.warning(item);
+    recordSearchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+       
+        // // Gestion de la soumission du formulaire
+        // recordSearchForm.addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     performSearch();
+        // });
+         // Récupérer uniquement les champs renseignés
+         const formData = new FormData(recordSearchForm);
+         const searchParams = new URLSearchParams();
+
+         // Ne garder que les champs non vides
+         for (const [key, value] of formData.entries()) {
+            if (value.trim() !== '') {
+                searchParams.append(key, value.trim());
+            }
         }
 
-    } --}}
+        // Si aucun champ n'est renseigné, afficher une alerte
+        if (searchParams.toString() === '') {
+            alert('Veuillez renseigner au moins un critère de recherche');
+            return;
+        }
+
+    
+        // Fonction pour effectuer la recherche via AJAX
+        function performSearch() {
+            const formData = new FormData(recordSearchForm);
+            const searchParams = new URLSearchParams(formData);
+    
+            // // Afficher un indicateur de chargement
+            // resultsTable.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div></div>';
+            
+              // Afficher le spinner pendant le chargement
+              resultsTable.innerHTML = `
+            <div class="d-flex justify-content-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+            </div>`;
+            // Effectuer la requête AJAX
+            fetch(`${window.location.pathname}/search?${searchParams.toString()}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                resultsTable.innerHTML = html;
+
+                
+                // Mettre à jour l'URL avec les paramètres de recherche
+                window.history.pushState({}, '', `${window.location.pathname}?${searchParams.toString()}`);
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                resultsTable.innerHTML = '<div class="alert alert-danger">Une erreur est survenue lors de la recherche.</div>';
+            });
+        }
+       });
+
+    </script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {{-- </script>
   <script type="text/javascript">
     $(function () {

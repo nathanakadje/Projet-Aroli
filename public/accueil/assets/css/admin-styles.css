@@ -21,6 +21,7 @@ input:disabled {
   background-color: #eee;
 }
 /* ****************Search view********************************************** */
+
 .top-buttons {
   position: absolute;
   width: 100%;
@@ -46,6 +47,107 @@ input:disabled {
 }
 .logo img {
   margin: -2px 0;
+}
+/* ************************************************************************************************** */
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #6c757d;
+  margin-left: 50px;
+}
+.export-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.export-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px;
+}
+.export-menu a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.export-menu a:hover {
+  background-color: #f1f1f1;
+}
+.show {
+  display: block;
+}
+.btn-export {
+  margin-left: 10px;
+}
+.export-icon {
+  margin-right: 8px;
+}
+/* ******************************************************************************* */
+.search-window {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(150, 148, 148, 0.712);
+  color: white;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.search-box input,
+.search-box button,
+.search-box select {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.search-box input {
+  background: #444;
+  color: white;
+}
+.search-box select {
+  background: #444;
+  color: white;
+}
+
+.search-box button {
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: #0056b3;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 14px;
+  background: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.close-btn {
+  background: #ff4444;
 }
 
 /* a:not(.w3-button) { text-decoration: none }
@@ -144,6 +246,11 @@ a:not(.w3-button):hover { text-decoration: underline } */
   margin-left: 230px;
   transition: none;
 }
+#app .w3-mains {
+  margin-left: 500px;
+  justify-content: center;
+  transition: none;
+}
 #sidebar-control:checked + #app .w3-main {
   margin-left: 0px;
   transition: margin-left .4s;
@@ -169,4 +276,79 @@ a:not(.w3-button):hover { text-decoration: underline } */
   #sidebar-control + #app .w3-sidebar {
     transform: translateX(-100%)!important;
   }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.options-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.options-menu button {
+  margin: 5px 0;
+  cursor: pointer;
+}
+.save{
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+}
+
+.pagination .page-link {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #007bff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.pagination .page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+.form-containers {
+  /* Utilisation de flexbox pour centrer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Prend toute la hauteur de la page */
+  min-height: 100vh;
 }
