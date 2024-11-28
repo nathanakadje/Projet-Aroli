@@ -88,6 +88,7 @@
   @yield('dashboard')
   @yield('formulaire')
   @yield('search')
+  @yield('actions')
   <script type="text/javascript" src="https://smsrouter.letexto.com/js/prismjs.bundle.js"></script>
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/popper.min.js"></script>
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/scripts.bundle.js"></script>
@@ -105,101 +106,6 @@
 
 
 
-<script>
-    function showOptions(userId) {
-        document.getElementById(`optionsMenu${userId}`).style.display = 'block';
-    }
-
-    function openEditModal(userId) {
-        // Récupérer les données de l'utilisateur
-        fetch(`/actions/${userId}`)
-            .then(response => response.json())
-            .then(user => {
-                document.getElementById('userId').value = user.id;
-                document.getElementById('name').value = user.name;
-                document.getElementById('country').value = user.country;
-                document.getElementById('status').value = user.status;
-                document.getElementById('operator').value = user.operator;
-                
-                // Afficher la modale
-                document.getElementById('editModal').style.display = 'block';
-            });
-    }
-
-    function closeEditModal() {
-        document.getElementById('editModal').style.display = 'none';
-    }
-
-    function saveChanges() {
-        const userId = document.getElementById('userId').value;
-        const data = {
-            _token: '{{ csrf_token() }}',
-            name: document.getElementById('name').value,
-            country: document.getElementById('country').value,
-            status: document.getElementById('status').value,
-            operator: document.getElementById('operator').value
-        };
-
-        fetch(`/actions/${userId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Mise à jour réussie !");
-                closeEditModal();
-                location.reload();
-            } else {
-                alert("Erreur lors de la mise à jour.");
-            }
-        });
-    }
-
-    function deleteUser(userId) {
-        if (confirm("are you sure?")) {
-            fetch(`/actions/${userId}`, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Sender deleted !");
-                    location.reload();
-                } else {
-                    alert("Erreur lors de la suppression.");
-                }
-            });
-        }
-    }
-</script>
-{{-- <script>
-    // Fonction de filtrage
-    document.getElementById('search').addEventListener('input', function () {
-        const filter = this.value.toLowerCase(); // Convertir le texte en minuscules
-        const rows = document.querySelectorAll('#dataTable tr'); // Sélectionner toutes les lignes
-
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            let match = false;
-
-            // Vérifier si une des colonnes contient le texte recherché
-            cells.forEach(cell => {
-                if (cell.textContent.toLowerCase().includes(filter)) {
-                    match = true;
-                }
-            });
-
-            // Afficher ou masquer la ligne en fonction du résultat
-            row.style.display = match ? '' : 'none';
-        });
-    });
-</script> --}}
-
 
 {{-- <script>
     document.getElementById('showSearchForm').addEventListener('click', function() {
@@ -209,6 +115,20 @@
     });
 </script> --}}
 
+<script>
+   $(document).ready(function() {
+    $('#recordModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); 
+            var recordId = button.data('id'); 
+            
+            // Charge les détails de l'enregistrement via AJAX
+            $.get('/search/' + recordId + '/details', function(data) {
+                $('#recordModal .modal-body').html(data);
+
+            });
+    });
+        });
+</script>
 <!-- Ajoutez ce script à la fin de votre vue, juste avant la fermeture de la balise body -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -344,275 +264,6 @@
 
 
 
-{{-- </script>
-  <script type="text/javascript">
-    $(function () {
-        $.ajaxSetup({ headers: { "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content") } });
 
-        var table = $("#tabledatas").DataTable({
-            ajax: "https://smsrouter.letexto.com/routings",
-            columns: [
-                { data: "DT_RowIndex", name: "DT_RowIndex", className: "text-center py-1" },
-                { data: "routing_id", name: "routing_id", visible: false, className: "py-1"},
-                { data: "routing_name", name: "routing_name", className: "py-1 text-nowrap"},
-                { data: "country_name", name: "country_name", className: "py-1 text-nowrap",
-                    render: function (data, type, row) {
-                        if (row.network_name == null){
-                            return data + ' (All)';
-                        }else{
-                            return row.network_name;
-                        }
-                    }
-                },
-                { data: "connector_name", name: "connector_name", className: "py-1 text-nowrap"},
-                { data: "routing_rate", name: "routing_rate", className: "py-1 text-center"},
-                { data: "routing_active", name: "routing_active", className: "py-1 text-center",
-                    render: function (data, type, row) {
-                        if (data == 'yes'){
-                            return '<a href="javascript:void(0)" data-id="'+row.routing_id+'" class="disableRouting"><i class="fa-solid fa-toggle-on fs-5 text-success"></i></a>';
-                        }else{
-                            return '<a href="javascript:void(0)" data-id="'+row.routing_id+'" class="enableRouting"><i class="fa-solid fa-toggle-off fs-5 text-danger"></i></a>';
-                        }
-                    }
-                },
-                { data: "action", name: "action", className: "text-center text-nowrap py-1" },
-            ],
-            order: [[1, "asc"]],
-            processing: false,
-            serverSide: true,
-            responsive: true,
-            pageLength: 20,
-            lengthChange: true,
-            lengthMenu: [10, 20, 50, 100, 200, 500, 1000],
-        });
-
-        $('#routing_country_id').select2({
-            dropdownParent: $('#entryModal')
-        });
-
-        $('#routing_network_id').select2({
-            dropdownParent: $('#entryModal')
-        });
-
-        $('#routing_connector_id').select2({
-            dropdownParent: $('#entryModal')
-        });
-
-        // Export
-        const documentTitle = 'Default Routings';
-        var buttons = new $.fn.dataTable.Buttons(table, {
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    title: documentTitle,
-                    exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6 ]
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    title: documentTitle,
-                    exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6 ]
-                    }
-                },
-            ]
-        }).container().appendTo($('#tabledatas_buttons'));
-
-        const exportButtons = document.querySelectorAll('#tabledatas_export_menu [data-kt-export]');
-        exportButtons.forEach(exportButton => {
-            exportButton.addEventListener('click', e => {
-                e.preventDefault();
-
-                const exportValue = e.target.getAttribute('data-kt-export');
-                const target = document.querySelector('.dt-buttons .buttons-' + exportValue);
-
-                target.click();
-            });
-        });
-
-        $("#addData").click(function () {
-            $("#entryModalTitle").html("Add Routing");
-            $("#saveBtn").val("add-entry");
-            $("#routing_id").val("");
-            $("#entryForm").trigger("reset");
-            $("#entryModal").modal("show");
-            document.getElementById('network-field').style.display = 'none';
-            $("#routing_connector_id").val('').trigger('change');
-            $("#routing_network_id").val('').trigger('change');
-            $("#routing_country_id").val('').trigger('change');
-        });
-
-        $("#saveBtn").click(function (e) {
-            e.preventDefault(),
-            $.ajax({
-                data: $("#entryForm").serialize(),
-                url: "https://smsrouter.letexto.com/routings",
-                type: "POST",
-                dataType: "json",
-                success: function (response) {
-                    $("#entryForm").trigger("reset");
-                    $("#entryModal").modal("hide");
-                    table.draw();
-                    Swal.fire({
-                        icon: "success",
-                        title: "Saved",
-                        text: response.success,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    $("#routing_id").val("");
-                },
-                error: function (response) {
-                    response = JSON.parse(response.responseText);
-                    table.draw();
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: response.message
-                    });
-                }
-            });
-        });
-
-        $("body").on("click", ".editData", function () {
-            var id = $(this).data("id");
-            document.getElementById('network-field').style.display = 'block';
-            $.get("https://smsrouter.letexto.com/routings/" + id + "/edit", function (data) {
-                $("#entryModalTitle").html("Edit Routing");
-                $("#saveBtn").val("edit-entry");
-                $("#entryModal").modal("show");
-                $("#routing_id").val(data.routing_id);
-                $("#routing_name").val(data.routing_name);
-                $("#routing_connector_id").val(data.routing_connector_id).trigger('change');
-                $("#routing_network_id").val(data.routing_network_id).trigger('change');
-                $("#routing_country_id").val(data.routing_country_id).trigger('change');
-                $("#routing_rate").val(data.routing_rate)
-            });
-        });
-
-        $("body").on("click", ".deleteData", function () {
-            var id = $(this).data("id");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You will not be able to recover it!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            }).then((result) =>{
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "https://smsrouter.letexto.com/routings/" + id,
-                        success: function (response) {
-                            table.draw();
-                            Swal.fire({
-                                icon: "success",
-                                title: "Saved",
-                                text: response.success,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        },
-                        error: function (response) {
-                            response = JSON.parse(response.responseText);
-                            table.draw();
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: response.message
-                            });
-                        },
-                    });
-                }
-            });
-        });
-
-        $("body").on("click", ".enableRouting", function () {
-            var id = $(this).data("id");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "It will be enabled",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "",
-                confirmButtonText: "Yes, enable it!"
-            }).then((result) =>{
-                if (result.isConfirmed) {
-                    $.ajax({
-                        data: {'routing_id': id},
-                        url: "https://smsrouter.letexto.com/routing/enable",
-                        type: "POST",
-                        dataType: "json",
-                        success: function (response) {
-                            table.draw();
-                            Swal.fire({
-                                icon: "success",
-                                title: "Saved",
-                                text: response.success,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        },
-                        error: function (response) {
-                            response = JSON.parse(response.responseText);
-                            table.draw();
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: response.message
-                            });
-                        },
-                    });
-                }
-            });
-        });
-
-        $("body").on("click", ".disableRouting", function () {
-            var id = $(this).data("id");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "It will be disabled",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, disable it!"
-            }).then((result) =>{
-                if (result.isConfirmed) {
-                    $.ajax({
-                        data: {'routing_id': id},
-                        url: "https://smsrouter.letexto.com/routing/disable",
-                        type: "POST",
-                        dataType: "json",
-                        success: function (response) {
-                            table.draw();
-                            Swal.fire({
-                                icon: "success",
-                                title: "Saved",
-                                text: response.success,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        },
-                        error: function (response) {
-                            response = JSON.parse(response.responseText);
-                            table.draw();
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: response.message
-                            });
-                        },
-                    });
-                }
-            });
-        });
-
-        document.getElementById("routings").classList.add('active');
-        document.getElementById("routing-default-routings").classList.add('active', 'fw-bold');
-    });
-</script> --}}
 </body>
 </html>

@@ -48,7 +48,7 @@ Route::get('/dashboard', [RegisterController::class, 'dashboard']);
 
 Route::post('/search', [SearchController::class, 'searchs'])->name('search.searchs');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-Route::get('/search/{id}/details', [SearchController::class, 'show'])->name('search.show');
+Route::get('/search/{id}/details', [SearchController::class, 'show']);
 Route::get('/search/{type}', [SearchController::class, 'export'])->name('search.export');
 
 
@@ -60,4 +60,5 @@ Route::get('/actions', [ActionController::class, 'index']);
 Route::get('/actions/{id}', [ActionController::class, 'show']);
 Route::put('/actions/{id}', [ActionController::class, 'update']);
 Route::delete('/actions/{id}', [ActionController::class, 'destroy']);
+Route::get('/actions/{type}/exported', [ActionController::class, 'exported'])->name('actions.exported');
 

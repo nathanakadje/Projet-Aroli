@@ -139,7 +139,7 @@
                       {{ $sender->links() }}
                   </div> --}}
                           
-                        <!-- Modale pour afficher les détails -->
+                        {{-- <!-- Modale pour afficher les détails -->
         <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -156,7 +156,21 @@
               </div>
           </div>
       </div>       
-   
+    --}}
+       <!-- Modal pour les détails -->
+       <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recordModalLabel">Détails de l'enregistrement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalDetailsContent">
+                    <!-- Contenu sera chargé ici avec AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
                      </div>
                     </div>
                     </section>

@@ -169,67 +169,138 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // *************************************************************************************************************
-$(document).ready(function() {
-	$('.view-details').on('click', function() {
-		var id = $(this).data('id');
+// $(document).ready(function() {
+// 	$('.view-details').on('click', function() {
+// 		var id = $(this).data('id');
 
-		$.ajax({
-			url: '/search/' + id + '/details',
-			method: 'GET',
-			success: function(data) {
-				var formattedDate = new Date(data.created_at).toLocaleDateString('fr-FR', {
-				year: 'numeric',
-				month: 'long', 
-				day: 'numeric',
-				hour: '2-digit',
-				minute: '2-digit'
-			});
-			var formatted= new Date(data.updated_at).toLocaleDateString('fr-FR', {
-				year: 'numeric',
-				month: 'long', 
-				day: 'numeric',
-				hour: '2-digit',
-				minute: '2-digit'
-			});
-				var detailsHtml = `
-					<table class="table">
+// 		$.ajax({
+// 			url: '/search/' + id + '/details',
+// 			method: 'GET',
+// 			success: function(data) {
+// 				var formattedDate = new Date(data.created_at).toLocaleDateString('fr-FR', {
+// 				year: 'numeric',
+// 				month: 'long', 
+// 				day: 'numeric',
+// 				hour: '2-digit',
+// 				minute: '2-digit'
+// 			});
+// 			var formatted= new Date(data.updated_at).toLocaleDateString('fr-FR', {
+// 				year: 'numeric',
+// 				month: 'long', 
+// 				day: 'numeric',
+// 				hour: '2-digit',
+// 				minute: '2-digit'
+// 			});
+// 				var detailsHtml = `
+// 					<table class="table">
 			
-						<tr>
-							<th><strong>Name</strong></th>
-							<td>${data.name}</td>
-						</tr>
-						<tr>
-							<th><strong>Operator</strong></th>
-							<td>${data.operator}</td>
-						</tr>
-						<tr>
-							<th><strong>Status</strong></th>
-							<td>${data.status}</td>
-						</tr>
-						<tr>
-							<th><strong>Country</strong></th>
-							<td>${data.country}</td>
-						</tr>
-						<tr>
-							<th><strong>Created At</strong></th>
-							<td>${formattedDate}</td>
-						</tr>
-						<tr>
-							<th><strong>Commentaire</strong></th>
-							<td>${data.commentaire}</td>
-						</tr>
-						<tr>
-							<th><strong>Updated_At</strong></th>
-							<td>${formatted}</td>
-						</tr>
-					</table>
-				`;
+// 						<tr>
+// 							<th><strong>Name</strong></th>
+// 							<td>${data.name}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Operator</strong></th>
+// 							<td>${data.operator}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Status</strong></th>
+// 							<td>${data.status}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Country</strong></th>
+// 							<td>${data.country}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Created At</strong></th>
+// 							<td>${formattedDate}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Commentaire</strong></th>
+// 							<td>${data.commentaire}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Updated_At</strong></th>
+// 							<td>${formatted}</td>
+// 						</tr>
+// 					</table>
+// 				`;
 				
-				$('#modalDetails').html(detailsHtml);
-			},
-			error: function() {
-				$('#modalDetails').html('<p>Erreur de chargement des détails</p>');
+// 				$('#modalDetails').html(detailsHtml);
+// 			},
+// 			error: function() {
+// 				$('#modalDetails').html('<p>Erreur de chargement des détails</p>');
+// 			}
+// 		});
+// 	});
+// });
+// **********************************************btn edit and delete
+function showOptions(userId) {
+	document.getElementById(`optionsMenu${userId}`).style.display = 'block';
+}
+
+function openEditModal(userId) {
+	// Récupérer les données de l'utilisateur
+	fetch(`/actions/${userId}`)
+		.then(response => response.json())
+		.then(user => {
+			document.getElementById('userId').value = user.id;
+			document.getElementById('name').value = user.name;
+			document.getElementById('country').value = user.country;
+			document.getElementById('status').value = user.status;
+			document.getElementById('operator').value = user.operator;
+			
+			// Afficher la modale
+			document.getElementById('editModal').style.display = 'block';
+		});
+}
+
+function closeEditModal() {
+	document.getElementById('editModal').style.display = 'none';
+}
+
+function saveChanges() {
+	const userId = document.getElementById('userId').value;
+	const data = {
+		_token: '{{ csrf_token() }}',
+		name: document.getElementById('name').value,
+		country: document.getElementById('country').value,
+		status: document.getElementById('status').value,
+		operator: document.getElementById('operator').value
+	};
+
+	fetch(`/actions/${userId}`, {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(data)
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			alert("Mise à jour réussie !");
+			closeEditModal();
+			location.reload();
+		} else {
+			alert("Erreur lors de la mise à jour.");
+		}
+	});
+}
+
+function deleteUser(userId) {
+	if (confirm("are you sure?")) {
+		fetch(`/actions/${userId}`, {
+			method: 'DELETE',
+			headers: {
+				'X-CSRF-TOKEN': '{{ csrf_token() }}'
+			}
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.success) {
+				alert("Sender deleted !");
+				location.reload();
+			} else {
+				alert("Erreur lors de la suppression.");
 			}
 		});
-	});
-});
+	}
+}

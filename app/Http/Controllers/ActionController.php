@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\registries;
+use App\Exports\ActionExport;
 use Illuminate\Http\Request;
-
+use Maatwebsite\Excel\Facades\Excel;
 class ActionController extends Controller
 {
     
@@ -88,4 +89,54 @@ class ActionController extends Controller
     $user = $query->latest()->paginate(5);
     return view('actions', compact('user'))->render();
 }
+
+
+    private function getFilteredQuery()
+    {
+        $query = registries::query();
+
+        if (request()->filled('name')) {
+            $query->where('name', 'LIKE', '%' . request('name') . '%');
+        }
+
+        if (request()->filled('operator')) {
+            $query->where('operator', 'LIKE', '%' . request('operator') . '%');
+        }
+
+        if (request()->filled('country')) {
+            $query->where('country', request('country'));
+        }
+
+        if (request()->filled('status')) {
+            $query->where('status', request('status'));
+        }
+        if (request()->filled('start_date')) {
+            $query->whereDate('start_date', request('start_date'));
+        }
+        if (request()->filled('end_date')) {
+            $query->whereDate('end_date', request('end_date'));
+        }
+        
+        if (request()->filled('updated_at')) {
+            $query->whereDate('updated_at', request('updated_at'));
+        }    
+
+      
+        return $query;
+    }
+
+    public  function exported(string $type)
+    {
+      
+        $senders = $this->getFilteredQuery()->get();
+
+        $filename = 'sender_export_' . date('Y-m-d_H-i-s');
+
+        return match($type) {
+                    'excel' => Excel::download(new ActionExport($senders), $filename . '.xlsx'),
+                    'csv' => Excel::download(new ActionExport($senders), $filename . '.csv'),
+                    default => redirect()->back()->with('error', 'Format d\'export non supporté'),
+                };
+    }
+
 }

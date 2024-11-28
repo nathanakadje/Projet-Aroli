@@ -1,10 +1,10 @@
 @extends('espacemembre')
-@section('search')
+@section('actions')
     
 
 
     <div class="w3-main" style="margin-top:54px">
-      {{-- <div style="padding:16px 32px"> --}}
+    
         
         <section class="badge-dot " >
         <div class="w3-right card-toolbar" style="margin-right: 10px"> 
@@ -21,7 +21,31 @@
                 </div>
             </h4>
         </div>
-        
+        <div>
+        <h3 class="w3-left card-toolbar mb-3" style="margin-left: 15px">
+            <!-- Bouton d'export avec menu déroulant -->
+            
+            <div class="dropdown">
+                <!-- Bouton principal avec une icône et un libellé -->
+                <button class="btn btn-sm btn-success dropdown-toggle text-white w3-margin-top"  type="button" id="exportCsvBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-download"></i> Exporter
+                </button>
+            
+                <!-- Menu déroulant contenant les options d'exportation -->
+                <ul class="dropdown-menu" aria-labelledby="exportCsvBtn">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('actions.exported', ['type' => 'excel'] + request()->query()) }}">
+                            <i class="fas fa-file-excel"></i> Export Excel
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('actions.exported', ['type' => 'csv'] + request()->query()) }}">
+                            <i class="fas fa-file-csv"></i> Export CSV
+                        </a>
+      
+                    </li>
+                </ul>
+            </div>
     </section>
         <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
           <div class="w3-padding-large">
@@ -100,7 +124,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modifier l'utilisateur</h5>
+                <h5 class="modal-title"><strong></strong>Editing sender</strong></h5>
                 <button type="button" class="close" onclick="closeEditModal()">&times;</button>
             </div>
             <div class="modal-body">
@@ -145,9 +169,8 @@
 </div>
 </div>        
   </div>
-
-</body>
-
-</html>
+        </div>
+        </div>
+   
 @endsection
 
