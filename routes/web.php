@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActionController;
-
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
 
@@ -38,7 +38,7 @@ Route::get('/addsender', function () {
     return view('form');
 })->name('form');
 Route::post('/addsender/store',[RegisterController::class, 'store']);
-Route::get('/dashboard', [RegisterController::class, 'dashboard']);
+
 //*************************Return detail  view ***************************************/
 // Route::get('/searchsender', [SearchController::class, 'search']);
 // Route::get('/searchsender', [SearchController::class, 'dashboard']);
@@ -48,12 +48,11 @@ Route::get('/dashboard', [RegisterController::class, 'dashboard']);
 
 Route::post('/search', [SearchController::class, 'searchs'])->name('search.searchs');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-Route::get('/search/{id}/details', [SearchController::class, 'show']);
+// Route::get('/search/{id}', [SearchController::class, 'show']);
+Route::get('/registry/{id}', [SearchController::class, 'getRegistryDetails']);
 Route::get('/search/{type}', [SearchController::class, 'export'])->name('search.export');
 
-
-
-
+// **********************************************************************************************
 Route::get('/actions', [ActionController::class, 'dashboard']);
 Route::get('/actions', [ActionController::class, 'index']);
 // Route::get('/actions/search', [ActionController::class, 'search']);
@@ -62,3 +61,9 @@ Route::put('/actions/{id}', [ActionController::class, 'update']);
 Route::delete('/actions/{id}', [ActionController::class, 'destroy']);
 Route::get('/actions/{type}/exported', [ActionController::class, 'exported'])->name('actions.exported');
 
+// ******************************************************************
+Route::get('/get-status-counts', [DashboardController::class, 'getStatusCounts']);
+
+Route::get('/get-status-statistics', [DashboardController::class, 'getStatusStats']);
+// Route::get('/dashboard', [DashboardController::class, 'dashboard']);
+Route::get('/dashboard', [DashboardController::class, 'getStatusStatistics']);

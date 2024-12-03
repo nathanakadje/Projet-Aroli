@@ -97,6 +97,97 @@ setTimeout(function () {
 	});
 
 }, 1000)
+// ************************************************************DoughnutChart*************************
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch status counts
+    function fetchStatusCounts() {
+        fetch('/get-status-counts')
+            .then(response => response.json())
+            .then(data => {
+                // Update chart with fetched data
+                updateDoughnutChart(data);
+            })
+            .catch(error => console.error('Error fetching status counts:', error));
+    }
+
+    // Function to create or update the doughnut chart
+    function updateDoughnutChart(data) {
+        const ctx = document.getElementById('statusDoughnutChart').getContext('2d');
+        
+        // Destroy existing chart if it exists
+        if (window.statusChart instanceof Chart) {
+            window.statusChart.destroy();
+        }
+
+        // Create new chart
+        window.statusChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pending', 'Valide', 'Close'],
+                datasets: [{
+                    data: [data.pending, data.valide, data.close],
+                    backgroundColor: [
+                        'rgba(255, 206, 86)',  // Yellow for Pending
+                        'rgba(0, 128, 0, 0.9)',  // Green for Valide
+                        'rgba(255, 99, 132)'   // Red for Close
+                    ],
+                    borderColor: [
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+					
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sender Status Distribution'
+                    }
+                }
+            }
+        });
+    }
+
+    // Initial fetch and setup periodic updates
+    fetchStatusCounts();
+    setInterval(fetchStatusCounts, 60000); // Update every minute
+});
+
+
+    
+// *************************************************************************************************
+document.addEventListener('DOMContentLoaded', function() {
+    function updateStatusStatistics() {
+        fetch('/dashboard')
+            .then(response => response.json())
+            .then(data => {
+                // Mettre à jour les compteurs
+                document.getElementById('total-senders').textContent = data.total.count;
+                document.getElementById('pending-senders').textContent = data.pending.count;
+                document.getElementById('valid-senders').textContent = data.valide.count;
+                document.getElementById('closed-senders').textContent = data.close.count;
+
+                // Mettre à jour les progress bars
+                document.getElementById('total-progress-bar').style.width = `${data.total.percentage}%`;
+                document.getElementById('pending-progress-bar').style.width = `${data.pending.percentage}%`;
+                document.getElementById('valid-progress-bar').style.width = `${data.valide.percentage}%`;
+                document.getElementById('closed-progress-bar').style.width = `${data.close.percentage}%`;
+            });
+    }
+
+    // Mise à jour initiale
+    updateStatusStatistics();
+
+    // Actualisation périodique (toutes les 5 minutes)
+    setInterval(updateStatusStatistics, 5 * 60 * 1000);
+});
+
+
 
 // ***********************************btn search page search
 
@@ -169,70 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // *************************************************************************************************************
-// $(document).ready(function() {
-// 	$('.view-details').on('click', function() {
-// 		var id = $(this).data('id');
 
-// 		$.ajax({
-// 			url: '/search/' + id + '/details',
-// 			method: 'GET',
-// 			success: function(data) {
-// 				var formattedDate = new Date(data.created_at).toLocaleDateString('fr-FR', {
-// 				year: 'numeric',
-// 				month: 'long', 
-// 				day: 'numeric',
-// 				hour: '2-digit',
-// 				minute: '2-digit'
-// 			});
-// 			var formatted= new Date(data.updated_at).toLocaleDateString('fr-FR', {
-// 				year: 'numeric',
-// 				month: 'long', 
-// 				day: 'numeric',
-// 				hour: '2-digit',
-// 				minute: '2-digit'
-// 			});
-// 				var detailsHtml = `
-// 					<table class="table">
-			
-// 						<tr>
-// 							<th><strong>Name</strong></th>
-// 							<td>${data.name}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Operator</strong></th>
-// 							<td>${data.operator}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Status</strong></th>
-// 							<td>${data.status}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Country</strong></th>
-// 							<td>${data.country}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Created At</strong></th>
-// 							<td>${formattedDate}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Commentaire</strong></th>
-// 							<td>${data.commentaire}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Updated_At</strong></th>
-// 							<td>${formatted}</td>
-// 						</tr>
-// 					</table>
-// 				`;
-				
-// 				$('#modalDetails').html(detailsHtml);
-// 			},
-// 			error: function() {
-// 				$('#modalDetails').html('<p>Erreur de chargement des détails</p>');
-// 			}
-// 		});
-// 	});
-// });
 // **********************************************btn edit and delete
 function showOptions(userId) {
 	document.getElementById(`optionsMenu${userId}`).style.display = 'block';

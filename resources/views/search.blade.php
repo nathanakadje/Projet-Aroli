@@ -7,7 +7,7 @@
         <section class="badge-dot " >
         <div class="w3-right card-toolbar mb-3"style="margin-right: 15px"> 
           <h4>
-            <button type="button" class="btn btn-sm text-white w3-margin-top" id="searchBtn" style="background-color: rgba(36, 83, 187, 1);">
+            <button type="button" class="btn btn-sm text-white w3-margin-top w3-round" id="searchBtn" style="background-color: rgba(36, 83, 187, 1);">
               <i class="fa fa-search text-white"></i>search</button>
           </h4>
         </div>
@@ -127,10 +127,31 @@
                           <td>{{ \Carbon\Carbon::parse($result->date_sub)->format('d/m/Y') }}</td>
                           <td>{{ \Carbon\Carbon::parse($result->date_valid)->format('d/m/Y') }}</td>
                           <td>
-                              <a href="#" class="view-details text-dark"  data-bs-toggle="modal"  data-bs-target="#recordModal" data-id="{{ $result->id }}"><i class="fa fa-fw fa-eye" style="color: rgb(158, 22, 4);"></i><span style="color: rgb(8, 8, 59)">View</span></a>
+                              <button type="button" data-toggle="modal" class="btn-sm border-0" data-target="#detailModal{{ $result->id }}"><i class="fa fa-fw fa-eye" style="color: rgb(158, 22, 4);"></i><span style="color: rgb(8, 8, 59)">View</span></button> 
                           </td>
       
                       </tr>
+                      <div class="modal fade" id="detailModal{{ $result->id }}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="color: rgb(44, 55, 204);">Détails de l'enregistrement #{{ $result->id }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span>&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Affichez les détails spécifiques à cet enregistrement -->
+                                    <p><strong>Name : </strong> {{ $result->name }}</p>
+                                    <p><strong>Operator :</strong>  {{ $result->operator }}</p>
+                                    <p><strong>Country : </strong> {{ $result->country }}</p>
+                                    <p><strong>Updated Date :</strong> {{ \Carbon\Carbon::parse($result->updated_at)->format('d/m/Y H:i')}}</p>
+                                    <p><strong>Commentaire :</strong>  {{ $result->country }}</p>
+                                    <!-- Ajoutez d'autres champs selon vos besoins -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                       @endforeach
                   @endif
               </tbody>
@@ -138,6 +159,8 @@
                     {{-- <div class="pagination">
                       {{ $sender->links() }}
                   </div> --}}
+
+                  
                           
                         {{-- <!-- Modale pour afficher les détails -->
         <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
@@ -155,10 +178,10 @@
                   </div>
               </div>
           </div>
-      </div>       
-    --}}
+      </div>        --}}
+    -
        <!-- Modal pour les détails -->
-       <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
+       {{-- <div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -170,7 +193,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
                      </div>
                     </div>
                     </section>

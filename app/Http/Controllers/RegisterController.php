@@ -11,12 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class RegisterController extends Controller
 {
 //  ********************************************************************************************  
-    public function dashboard()
-    {
-        $sender = registries::orderBy('created_at', 'desc')->take(5)->get(['created_at', 'name', 'country', 'status', 'date_sub']);
-      
-        return view('dashboard', compact('sender'));
-    }
+   
     
         public function store(Request $request){
         
@@ -26,6 +21,9 @@ class RegisterController extends Controller
                 'country' => 'required|max:20',
                 'status' => 'required|in:close,pending,valide',
                 'date_sub' => 'required|date|before_or_equal:today',
+                'date_valid' => 'required_if:status,valide,close',
+                'commentaire' => 'required_if:status,close',
+                
             ]);
     
             if ($request->status === 'close') {
@@ -48,9 +46,10 @@ class RegisterController extends Controller
                 'status.in' => 'Le statut doit être close, pending ou valide',
                 'date_sub.required' => 'La date de soumission est obligatoire',
                 'date_sub.date' => 'La date de soumission doit être une date valide',
-                'date_valid.required' => 'La date de validation est obligatoire pour le statut close',
+                'date_valid.required' => 'La date de validation est obligatoire pour le statut valide ou close',
                 'date_valid.date' => 'La date de validation doit être une date valide',
                 'commentaire.required' => 'Le commentaire est obligatoire pour le statut close',
+                
             ];
     
             try {

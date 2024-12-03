@@ -5,41 +5,41 @@
 <div class="w3-main" style="margin-top:54px">
     <div style="padding:16px 32px">
       <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
-        <div class="w3-row">
-          <div class="w3-col l3 w3-container w3-border-right">
-            <div class="w3-padding">
-              <h5>9526 <span class="w3-right"><i class="fa fa-fw fa-shopping-cart"></i></span></h5>
-              <div class="progress w3-light" style="height:3px;">
-                <div class="progress-bar w3-info" style="width:55%;height:3px;"></div>
-              </div>
-              <p>Total Orders <span class="w3-right">+4.2% ↑</span></p>
+        <div class="w3-row status-statistics">
+          <div class="w3-col l3 w3-container w3-border-right ">
+            <div class="w3-padding status-stats" >
+              <h4>{{ $stats['total']['count'] }} <span class="w3-right"><i class="fa fa-eye" aria-hidden="true"></i></i></span></h4> 
+                <div class="progress w3-light" style="height:3px;">
+                    <div class="progress-bar w3-info" style="width:100%;height:3px;"></div>
+                </div>
+                <p>Total Senders <span class="w3-right">100%</span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container w3-border-right">
             <div class="w3-padding">
-              <h5>8323 <span class="w3-right"><i class="fa fa-fw fa-usd"></i></span></h5>
-              <div class="progress w3-light" style="height:3px;">
-                <div class="progress-bar w3-success" style="width:55%;height:3px;"></div>
-              </div>
-              <p>Total Revenue <span class="w3-right">+1.2% ↑</span></p>
+              <h4>{{ $stats['valide']['count'] }} <span class="w3-right"><i class="fa fa-fw fa-check-circle"></i></span></h4>
+                <div class="progress w3-light" style="height:3px;">
+                    <div class="progress-bar w3-success" style="width:{{ $stats['valide']['percentage'] }}%;height:3px;"></div>
+                </div>
+                <p>Valid Senders <span class="w3-right">{{ $stats['valide']['percentage'] }}%</span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container w3-border-right">
             <div class="w3-padding">
-              <h5>6200 <span class="w3-right"><i class="fa fa-fw fa-eye"></i></span></h5>
-              <div class="progress w3-light" style="height:3px;">
-                <div class="progress-bar w3-warning" style="width:55%;height:3px;"></div>
-              </div>
-              <p>Visitors <span class="w3-right">+5.2% ↑</span></p>
+              <h4>{{ $stats['pending']['count'] }} <span class="w3-right"><i class="fa fa-fw fa-clock"></i></span></h4>
+                <div class="progress w3-light" style="height:3px;">
+                    <div class="progress-bar w3-warning" style="width:{{ $stats['pending']['percentage'] }}%;height:3px;"></div>
+                </div>
+                <p>Pending Senders <span class="w3-right">{{ $stats['pending']['percentage'] }}%</span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container">
             <div class="w3-padding">
-              <h5>5630 <span class="w3-right"><i class="fa fa-fw fa-envira"></i></span></h5>
-              <div class="progress w3-light" style="height:3px;">
-                <div class="progress-bar w3-danger" style="width:55%;height:3px;"></div>
-              </div>
-              <p>Messages <span class="w3-right">+2.2% ↑</span></p>
+              <h4>{{ $stats['close']['count'] }} <span class="w3-right"><i class="fa fa-fw fa-times-circle"></i></span></h4>
+                <div class="progress w3-light" style="height:3px;">
+                    <div class="progress-bar w3-danger" style="width:{{ $stats['close']['percentage'] }}%;height:3px;"></div>
+                </div>
+                <p>Closed Senders <span class="w3-right">{{ $stats['close']['percentage'] }}%</span></p>
             </div>
           </div>
         </div>
@@ -79,31 +79,28 @@
         </div>
         <div class="w3-col l4">
           <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
-            <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Weekly sales</header>
+            <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Sender Statistics</header>
             <div class="w3-padding-large" style="height: 188px;position:relative">
-              <canvas id="chart2"></canvas>
+              {{-- <canvas id="chart2"></canvas> --}}
+              <canvas id="statusDoughnutChart"></canvas>
             </div>
             <table class="w3-table w3-bordered w3-border-top">
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #14abef"></i> Direct</td>
-                <td>$5856</td>
-                <td>+55%</td>
+                <td><i class="fa fa-circle mr-2" style="color: #fba540"></i> Pending </td>
+                <td>$1105</td>
+                <td>+5%</td>
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i> Affiliate</td>
+                <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i>  Valide</td>
                 <td>$2602</td>
                 <td>+25%</td>
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #d13adf"></i> E-mail</td>
+                <td><i class="fa fa-circle mr-2" style="color: #d13adf"></i> close</td>
                 <td>$1802</td>
                 <td>+15%</td>
               </tr>
-              <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #fba540"></i> Other</td>
-                <td>$1105</td>
-                <td>+5%</td>
-              </tr>
+              
             </table>
           </div>
         </div>
@@ -234,9 +231,9 @@
       </div>
     </div> --}}
 
-    <footer class="w3-padding w3-border-top w3-center w3-white w3-margin-top">
+    {{-- <footer class="w3-padding w3-border-top w3-center w3-white w3-margin-top">
       <span class="w3-opacity">Make By Aroli<span class="w3-text-red"></span> .</span>
-    </footer>
+    </footer> --}}
   </div>
 </div>
 

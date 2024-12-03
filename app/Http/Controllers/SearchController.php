@@ -10,19 +10,10 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Pagination\Paginator;
 
 class SearchController extends Controller
-{
-    public function show($id)
-    {
-        $record = DB::table('registries')->where('id', $id)->first();
-
-        if (request()->ajax()) {
-            return response()->json($record);
-        }
-
-        return view('show', compact('record'));
-    }
+{  
     public function searchs(Request $request)
     {
+        
         $validated = $request->validate([
             'name' => 'nullable|string',
             'operator' => 'nullable|string', 
@@ -77,7 +68,6 @@ class SearchController extends Controller
         session(['results' => $results]);
         $showForm = true;
        
-
       
         return view('search', compact('results', 'showForm'));
     }
@@ -116,7 +106,22 @@ class SearchController extends Controller
         $results = collect([]);
         return view('search', compact('results'));
     }
+    // public function show($id)
+    // {
+    //     $record = DB::table('registries')->where('id', $id)->first();
 
+    //     if (request()->ajax()) {
+    //         return response()->json($record);
+    //     }
+
+    //     return view('search', compact('record'));
+    // }
+    public function getRegistryDetails($id)
+{
+    $registry = DB::table('registries')->find($id);
+    
+    return response()->json($registry);
+}
 
 
 

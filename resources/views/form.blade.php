@@ -8,7 +8,7 @@
   <div class="w3-row-padding w3-stretch">
     <div class="w3-col l6">
       <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
-        <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Add Sender</header>
+        <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Add New Sender</header>
         <div class="w3-padding-large">
 
           @if(session('success'))
@@ -33,7 +33,7 @@
               <div class="text-danger">{{ $message }}</div>
           @enderror
             </div>
-{{-- ************************* -****************************--}}
+{{-- *****************************************************--}}
             <div class="w3-margin-bottom">
               <label for="operator" class="form-label">Operator</label>
 
@@ -87,7 +87,7 @@
     {{-- ********************************************************************************************************************** --}}
            
             <div class="w3-margin-bottom">
-              <label for="commentaire" class="form-label">comment</label>
+              <label for="commentaire" class="form-label">Commentaire</label>
         <textarea  class="w3-input w3-border w3-round w3-round form-control @error('date_valid') is-invalid @enderror" name="commentaire"  placeholder="comment">{{ old('commentaire') }}</textarea>
         @error('commentaire')
         <div class="text-danger">{{ $message }}</div>

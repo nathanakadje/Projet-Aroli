@@ -1,6 +1,6 @@
 
-    <p><strong>Name : </strong>{{ $record->name }}</p>
-     <p><strong>Operator :</strong> {{ $record->operator }}</p>
+    <h5>Name : {{ $record->name }}</h5>
+     <h5>Operator : {{ $record->operator }}</h5>
      <p><strong>Country :</strong> {{ $record->country }}</p>
      <p><strong>Status :</strong> {{ $record->status }}</p>
      <p><strong>Date Sub :</strong> {{ \Carbon\Carbon::parse($record->date_sub)->format('d/m/Y H:i') }}</p>

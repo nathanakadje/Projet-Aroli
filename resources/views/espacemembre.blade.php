@@ -95,7 +95,7 @@
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/plugins.bundle.js"></script>
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/datatables.bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -115,6 +115,81 @@
     });
 </script> --}}
 
+<script>
+  $('#detailModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var registryId = button.data('registry-id');
+    
+    $.get('/registry/' + registryId, function(data) {
+        // Remplir la modal avec les données
+        $('#modalContent').html(...);
+    });
+});
+//   $(document).ready(function() {
+// 	$('.view-details').on('click', function() {
+// 		var id = $(this).data('id');
+
+// 		$.ajax({
+// 			url: '/search' + id ,
+// 			method: 'GET',
+// 			success: function(data) {
+// 				var formattedDate = new Date(data.created_at).toLocaleDateString('fr-FR', {
+// 				year: 'numeric',
+// 				month: 'long', 
+// 				day: 'numeric',
+// 				hour: '2-digit',
+// 				minute: '2-digit'
+// 			});
+// 			var formatted= new Date(data.updated_at).toLocaleDateString('fr-FR', {
+// 				year: 'numeric',
+// 				month: 'long', 
+// 				day: 'numeric',
+// 				hour: '2-digit',
+// 				minute: '2-digit'
+// 			});
+// 				var detailsHtml = `
+// 					<table class="table">
+			
+// 						<tr>
+// 							<th><strong>Name</strong></th>
+// 							<td>${data.name}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Operator</strong></th>
+// 							<td>${data.operator}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Status</strong></th>
+// 							<td>${data.status}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Country</strong></th>
+// 							<td>${data.country}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Created At</strong></th>
+// 							<td>${formattedDate}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Commentaire</strong></th>
+// 							<td>${data.commentaire}</td>
+// 						</tr>
+// 						<tr>
+// 							<th><strong>Updated_At</strong></th>
+// 							<td>${formatted}</td>
+// 						</tr>
+// 					</table>
+// 				`;
+				
+// 				$('#modalDetails').html(detailsHtml);
+// 			},
+// 			error: function() {
+// 				$('#modalDetails').html('<p style="color: red">Error loading details</p>');
+// 			}
+// 		});
+// 	});
+// });
+</script>
 <script>
    $(document).ready(function() {
     $('#recordModal').on('show.bs.modal', function(event) {
