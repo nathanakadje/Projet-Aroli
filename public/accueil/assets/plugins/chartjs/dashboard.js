@@ -62,41 +62,120 @@ setTimeout(function () {
 	});
 
 
-	// chart 2
-	var ctx2 = document.getElementById("chart2").getContext('2d');
-	var myChart2 = new Chart(ctx2, {
-		type: 'doughnut',
-		data: {
-			labels: ["Direct", "Affiliate", "E-mail", "Other"],
-			datasets: [{
-				backgroundColor: [
-					"#14abef",
-					"#02ba5a",
-					"#d13adf",
-					"#fba540"
-				],
-				data: [5856, 2602, 1802, 1105],
-				borderWidth: [0, 0, 0, 0]
-			}]
-		},
-		options: {
-			maintainAspectRatio: false,
-			legend: {
-				position :"bottom",
-				display: false,
-				labels: {
-					fontColor: '#ddd',
-					boxWidth:15
-				}
-			}
-			,
-			tooltips: {
-				displayColors:false
-			}
-		}
-	});
+	// // chart 2
+	// var ctx2 = document.getElementById("chart2").getContext('2d');
+	// var myChart2 = new Chart(ctx2, {
+	// 	type: 'doughnut',
+	// 	data: {
+	// 		labels: ["Direct", "Affiliate", "E-mail", "Other"],
+	// 		datasets: [{
+	// 			backgroundColor: [
+	// 				"#14abef",
+	// 				"#02ba5a",
+	// 				"#d13adf",
+	// 				"#fba540"
+	// 			],
+	// 			data: [5856, 2602, 1802, 1105],
+	// 			borderWidth: [0, 0, 0, 0]
+	// 		}]
+	// 	},
+	// 	options: {
+	// 		maintainAspectRatio: false,
+	// 		legend: {
+	// 			position :"bottom",
+	// 			display: false,
+	// 			labels: {
+	// 				fontColor: '#ddd',
+	// 				boxWidth:15
+	// 			}
+	// 		}
+	// 		,
+	// 		tooltips: {
+	// 			displayColors:false
+	// 		}
+	// 	}
+	// });
 
 }, 1000)
+
+
+document.addEventListener('DOMContentLoaded', function() {
+	fetch('/status-chart-data')
+		.then(response => response.json())
+		.then(data => {
+			var ctx = document.getElementById('statusChart').getContext('2d');
+			var statusChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: data.labels,
+					datasets: [
+						{
+							label: 'Pending',
+							data: data.pending,
+							borderColor: 'rgba(255, 99, 132, 1)',
+							backgroundColor: 'rgba(255, 99, 132, 0.2)',
+							borderWidth: 2,
+							fill: true,
+						},
+						{
+							label: 'Valide',
+							data: data.valide,
+							borderColor: 'rgba(54, 162, 235, 1)',
+							backgroundColor: 'rgba(54, 162, 235, 0.2)',
+							borderWidth: 2,
+							fill: true,
+						},
+						{
+							label: 'Close',
+							data: data.close,
+							borderColor: 'rgba(255, 206, 86, 1)',
+							backgroundColor: 'rgba(255, 206, 86, 0.2)',
+							borderWidth: 2,
+							fill: true,
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					scales: {
+						x: {
+							ticks: {
+								beginAtZero: true,
+								color: '#585757'
+							},
+							grid: {
+								display: true,
+								color: "rgba(0, 0, 0, .05)"
+							}
+						},
+						y: {
+							beginAtZero: true,
+							ticks: {
+								color: '#585757'
+							},
+							grid: {
+								display: true,
+								color: "rgba(0, 0, 0, .05)"
+							}
+						}
+					},
+					plugins: {
+						legend: {
+							display: true,
+							labels: {
+								color: '#585757'
+							}
+						},
+						tooltip: {
+							displayColors: false
+						}
+					}
+				}
+			});
+		})
+		.catch(error => console.error('Erreur de chargement des données:', error));
+});
 // ************************************************************DoughnutChart*************************
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -262,16 +341,16 @@ document.addEventListener('DOMContentLoaded', function() {
 // *************************************************************************************************************
 
 // **********************************************btn edit and delete
-function showOptions(userId) {
-	document.getElementById(`optionsMenu${userId}`).style.display = 'block';
+function showOptions(id) {
+	document.getElementById(`optionsMenu${id}`).style.display = 'block';
 }
 
-function openEditModal(userId) {
+function openEditModal(id) {
 	// Récupérer les données de l'utilisateur
-	fetch(`/actions/${userId}`)
+	fetch(`/get-show/${id}`)
 		.then(response => response.json())
 		.then(user => {
-			document.getElementById('userId').value = user.id;
+			document.getElementById('id').value = user.id;
 			document.getElementById('name').value = user.name;
 			document.getElementById('country').value = user.country;
 			document.getElementById('status').value = user.status;
@@ -287,7 +366,7 @@ function closeEditModal() {
 }
 
 function saveChanges() {
-	const userId = document.getElementById('userId').value;
+	const id = document.getElementById('id').value;
 	const data = {
 		_token: '{{ csrf_token() }}',
 		name: document.getElementById('name').value,
@@ -296,7 +375,7 @@ function saveChanges() {
 		operator: document.getElementById('operator').value
 	};
 
-	fetch(`/actions/${userId}`, {
+	fetch(`/get-put/${id}`, {
 		method: 'PUT',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(data)
@@ -313,9 +392,9 @@ function saveChanges() {
 	});
 }
 
-function deleteUser(userId) {
+function deleteUser(id) {
 	if (confirm("are you sure?")) {
-		fetch(`/actions/${userId}`, {
+		fetch(`/get-destroy/${id}`, {
 			method: 'DELETE',
 			headers: {
 				'X-CSRF-TOKEN': '{{ csrf_token() }}'

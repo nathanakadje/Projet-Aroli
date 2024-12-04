@@ -127,7 +127,7 @@
                           <td>{{ \Carbon\Carbon::parse($result->date_sub)->format('d/m/Y') }}</td>
                           <td>{{ \Carbon\Carbon::parse($result->date_valid)->format('d/m/Y') }}</td>
                           <td>
-                              <button type="button" data-toggle="modal" class="btn-sm border-0" data-target="#detailModal{{ $result->id }}"><i class="fa fa-fw fa-eye" style="color: rgb(158, 22, 4);"></i><span style="color: rgb(8, 8, 59)">View</span></button> 
+                              <button type="button" data-toggle="modal" class="btn-sm custom-btn" data-target="#detailModal{{ $result->id }}"><i class="fa fa-fw fa-eye" style="color: rgb(158, 22, 4);"></i><span style="color: rgb(8, 8, 59)">View</span></button> 
                           </td>
       
                       </tr>
@@ -135,7 +135,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" style="color: rgb(44, 55, 204);">Détails de l'enregistrement #{{ $result->id }}</h5>
+                                    <h5 class="modal-title" style="color: rgb(44, 55, 204);">Registration details #{{ $result->id }}</h5>
                                     <button type="button" class="close" data-dismiss="modal">
                                         <span>&times;</span>
                                     </button>

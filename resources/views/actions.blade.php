@@ -1,7 +1,5 @@
 @extends('espacemembre')
 @section('actions')
-    
-
 
     <div class="w3-main" style="margin-top:54px">
     
@@ -21,7 +19,7 @@
                 </div>
             </h4>
         </div>
-        <div>
+        {{-- <div>
         <h3 class="w3-left card-toolbar mb-3" style="margin-left: 15px">
             <!-- Bouton d'export avec menu déroulant -->
             
@@ -46,6 +44,8 @@
                     </li>
                 </ul>
             </div>
+        </h3>
+        </div>  --}}
     </section>
         <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
           <div class="w3-padding-large">
@@ -101,8 +101,8 @@
                                 <td>{{ \Carbon\Carbon::parse($senders->date_valid)->format('d/m/Y') }}</td> --}}
                         
                                 <td>
-                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i>Edit</a>
-                                    <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(243, 10, 10, 0.801)">Delete</span></a>
+                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(161, 1, 1, 0.822)">Actions</span></a>
+                                    {{-- <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(243, 10, 10, 0.801)">Delete</span></a> --}}
                                
                                 </td>
                             </tr>
@@ -116,11 +116,57 @@
                     </table>
                     <div class="pagination">
                         {{ $user->links() }}
-                    </div>
+                    </div> 
                             <!-- Pagination -->
     
+
+                            <div class="modal fade" id="editDeleteModal" tabindex="-1" aria-labelledby="editDeleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editDeleteModalLabel">Edit/Delete Record</h5>
+                                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="editForm">
+                                                @csrf
+                                                <input type="hidden" id="editRecordId" name="id">
+                                                
+                                                <div class="mb-3">
+                                                    <label for="editName" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" id="editName" name="name" required maxlength="11" >
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="editOperator" class="form-label">Operator</label>
+                                                    <input type="text" class="form-control" id="editOperator" name="operator" required>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="editCountry" class="form-label">Country</label>
+                                                    <input type="text" class="form-control" id="editCountry" name="country" required>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="editStatus" class="form-label">Status</label>
+                                                    <select class="form-select" id="editStatus" name="status" required>
+                                                        <option value="pending">Pending</option>
+                                                        <option value="valide">Valide</option>
+                                                        <option value="close">Close</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-sm " id="deleteButton">Delete</button>
+                                            <button type="button" class="btn btn-primary btn-sm" id="updateButton">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                    <!-- Fenêtre modale pour l'édition -->
-<div class="modal" id="editModal" tabindex="-1" role="dialog">
+{{-- <div class="modal" id="editModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,12 +205,12 @@
                     </div>
                     <div class="save">
                     <button type="button" class="btn btn-primary btn-sm"  onclick="saveChanges()">Save</button>
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 </div>
 </div>        

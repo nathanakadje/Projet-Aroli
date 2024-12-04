@@ -99,8 +99,8 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
-  
   <script src="./accueil/assets/plugins/chartjs/Chart.min.js"></script>
   <script src="./accueil/assets/plugins/chartjs/dashboard.js"></script>
 
@@ -125,6 +125,7 @@
         $('#modalContent').html(...);
     });
 });
+
 //   $(document).ready(function() {
 // 	$('.view-details').on('click', function() {
 // 		var id = $(this).data('id');
@@ -191,6 +192,82 @@
 // });
 </script>
 <script>
+  
+  function openEditModal(id) {
+      // Récupérer les données de l'enregistrement via AJAX
+      $.ajax({
+          url: '/get-registry-details/' + id,
+          method: 'GET',
+          success: function(data) {
+              // Remplir le formulaire modal avec les données
+              $('#editRecordId').val(data.id);
+              $('#editName').val(data.name);
+              $('#editOperator').val(data.operator);
+              $('#editCountry').val(data.country);
+              $('#editStatus').val(data.status);
+              
+              // Afficher la modal
+              new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
+          },
+          error: function(xhr) {
+              alert('Erreur lors de la récupération des données');
+          }
+      });
+  }
+  
+
+
+  // Fonction de mise à jour
+  $('#updateButton').click(function() {
+      var formData = $('#editForm').serialize();
+      
+      $.ajax({
+          url: '/update-registry',
+          method: 'POST',
+          data: formData,
+          success: function(response) {
+              if(response.success) {
+                  alert('Enregistrement mis à jour avec succès');
+                  location.reload(); // Recharger la page pour voir les modifications
+              } else {
+                  alert('Erreur lors de la mise à jour');
+              }
+          },
+          error: function(xhr) {
+              alert('Erreur lors de la mise à jour');
+          }
+      });
+  });
+  
+  // Fonction de suppression
+  $('#deleteButton').click(function() {
+      var id = $('#editRecordId').val();
+      
+      if(confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+          $.ajax({
+              url: '/delete-registry/' + id,
+              method: 'DELETE',
+              data: {
+                  '_token': '{{ csrf_token() }}'
+              },
+              success: function(response) {
+                  if(response.success) {
+                      alert('Enregistrement supprimé avec succès');
+                      location.reload(); // Recharger la page
+                  } else {
+                      alert('Erreur lors de la suppression');
+                  }
+              },
+              error: function(xhr) {
+                  alert('Erreur lors de la suppression');
+              }
+          });
+      }
+  });
+
+  
+  </script>
+{{-- <script>
    $(document).ready(function() {
     $('#recordModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); 
@@ -203,7 +280,7 @@
             });
     });
         });
-</script>
+</script> --}}
 <!-- Ajoutez ce script à la fin de votre vue, juste avant la fermeture de la balise body -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {

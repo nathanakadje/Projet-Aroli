@@ -21,7 +21,10 @@ input:disabled {
   background-color: #eee;
 }
 /* ****************Search view********************************************** */
-
+.custom-btn {
+  border: none;           /* Supprime les bordures */
+  opacity: 1;             /* Aucune opacité (pleinement visible) */
+}
 .top-buttons {
   position: absolute;
   width: 100%;

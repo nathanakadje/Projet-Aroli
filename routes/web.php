@@ -7,7 +7,6 @@ use App\Http\Controllers\SearchController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,17 +52,20 @@ Route::get('/registry/{id}', [SearchController::class, 'getRegistryDetails']);
 Route::get('/search/{type}', [SearchController::class, 'export'])->name('search.export');
 
 // **********************************************************************************************
-Route::get('/actions', [ActionController::class, 'dashboard']);
+// Route::get('/actions', [ActionController::class, 'dashboard']);
 Route::get('/actions', [ActionController::class, 'index']);
-// Route::get('/actions/search', [ActionController::class, 'search']);
-Route::get('/actions/{id}', [ActionController::class, 'show']);
-Route::put('/actions/{id}', [ActionController::class, 'update']);
-Route::delete('/actions/{id}', [ActionController::class, 'destroy']);
-Route::get('/actions/{type}/exported', [ActionController::class, 'exported'])->name('actions.exported');
+// // Route::get('/actions/search', [ActionController::class, 'search']);
+// Route::get('/actions/{id}', [ActionController::class, 'show']);
+// Route::put('/actions/{id}', [ActionController::class, 'update']);
+// Route::delete('/actions/{id}', [ActionController::class, 'destroy']);
+// Route::get('/actions/{type}/exported', [ActionController::class, 'exported'])->name('actions.exported');
+Route::get('/get-registry-details/{id}', [ActionController::class, 'getRegistryDetails']);
+Route::post('/update-registry', [ActionController::class, 'updateRegistry']);
+Route::delete('/delete-registry/{id}', [ActionController::class, 'deleteRegistry']);
 
 // ******************************************************************
 Route::get('/get-status-counts', [DashboardController::class, 'getStatusCounts']);
-
 Route::get('/get-status-statistics', [DashboardController::class, 'getStatusStats']);
 // Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 Route::get('/dashboard', [DashboardController::class, 'getStatusStatistics']);
+Route::get('/status-chart-data', [DashboardController::class, 'getStatusChartData']);

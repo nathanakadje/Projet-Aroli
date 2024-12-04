@@ -47,33 +47,15 @@
       <div class="w3-row-padding w3-stretch">
         <div class="w3-col l8">
           <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
-            <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Site Traffic</header>
+            <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Sender Traffic</header>
             <div class="w3-bar w3-padding">
               <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #14abef"></i> New Visitor</div>
               <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #ade2f9"></i> Old Visitor</div>
             </div>
             <div class="w3-padding-large" style="height: 256px;position:relative">
-              <canvas id="chart1"></canvas>
+              <div style="width: 80%; margin: 50px auto;">
+                <canvas id="statusChart"></canvas>
             </div>
-            <div class="w3-row w3-center w3-border-top">
-              <div class="w3-col s4">
-                <div class="w3-padding-large">
-                  <h5 style="margin:0">45.87M</h5>
-                  <small class="w3-opacity-min">Overall Visitor <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small>
-                </div>
-              </div>
-              <div class="w3-col s4">
-                <div class="w3-padding-large">
-                  <h5 style="margin:0">15:48</h5>
-                  <small class="w3-opacity-min">Visitor Duration <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small>
-                </div>
-              </div>
-              <div class="w3-col s4">
-                <div class="w3-padding-large">
-                  <h5 style="margin:0">245.65</h5>
-                  <small class="w3-opacity-min">Pages/Visit <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -87,18 +69,15 @@
             <table class="w3-table w3-bordered w3-border-top">
               <tr>
                 <td><i class="fa fa-circle mr-2" style="color: #fba540"></i> Pending </td>
-                <td>$1105</td>
-                <td>+5%</td>
+                
               </tr>
               <tr>
                 <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i>  Valide</td>
-                <td>$2602</td>
-                <td>+25%</td>
+               
               </tr>
               <tr>
                 <td><i class="fa fa-circle mr-2" style="color: #d13adf"></i> close</td>
-                <td>$1802</td>
-                <td>+15%</td>
+                
               </tr>
               
             </table>

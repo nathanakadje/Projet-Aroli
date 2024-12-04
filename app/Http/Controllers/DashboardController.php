@@ -8,40 +8,50 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class DashboardController extends Controller
 {
-    //
-    // public function dashboard()
-    // {
-    //     $sender = registries::orderBy('created_at', 'desc')->take(5)->get(['created_at', 'name', 'country', 'status', 'date_sub']);
-      
-    //     return view('dashboard', compact('sender'));
-    // }
-    
+    public function getStatusChartData()
+{
+    $statusData = DB::table('registries')
+        ->select(
+            DB::raw('EXTRACT(MONTH FROM created_at) as month'),
+            DB::raw('COUNT(CASE WHEN status = \'pending\' THEN 1 END) as pending_count'),
+            DB::raw('COUNT(CASE WHEN status = \'valide\' THEN 1 END) as valide_count'),
+            DB::raw('COUNT(CASE WHEN status = \'close\' THEN 1 END) as close_count')
+        )
+        ->whereYear('created_at', Carbon::now()->year)
+        ->groupByRaw('EXTRACT(MONTH FROM created_at)')
+        ->orderByRaw('EXTRACT(MONTH FROM created_at)')
+        ->get();
 
-    // public function getStatusStatisticss(Request $request)
-    // {
-    //     $startDate = $request->input('start_date') 
-    //         ? Carbon::parse($request->input('start_date')) 
-    //         : null;
-    //     $endDate = $request->input('end_date') 
-    //         ? Carbon::parse($request->input('end_date')) 
-    //         : null;
+    // Préparer les données pour le graphique
+    $labels = [];
+    $pendingData = [];
+    $valideData = [];
+    $closeData = [];
 
-    //     $query = registries::query();
+    // Initialiser les données pour tous les mois
+    for ($i = 1; $i <= 12; $i++) {
+        $labels[] = Carbon::create()->month($i)->format('M');
+        $pendingData[] = 0;
+        $valideData[] = 0;
+        $closeData[] = 0;
+    }
 
-    //     if ($startDate && $endDate) {
-    //         $query->whereBetween('created_at', [$startDate, $endDate]);
-    //     }
+    // Remplacer les valeurs avec les données réelles
+    foreach ($statusData as $data) {
+        $index = $data->month - 1;
+        $pendingData[$index] = $data->pending_count;
+        $valideData[$index] = $data->valide_count;
+        $closeData[$index] = $data->close_count;
+    }
 
-    //     $statistics = $query->groupBy('status')
-    //         ->selectRaw('status, COUNT(*) as count')
-    //         ->pluck('count', 'status')
-    //         ->toArray();
+    return response()->json([
+        'labels' => $labels,
+        'pending' => $pendingData,
+        'valide' => $valideData,
+        'close' => $closeData,
+    ]);
+}
 
-    //     return response()->json([
-    //         'labels' => array_keys($statistics),
-    //         'data' => array_values($statistics)
-    //     ]);
-    // }
     public function getStatusCounts()
 {
 
