@@ -15,15 +15,14 @@
   <link href="https://smsrouter.letexto.com/css/plugins.bundle.css" rel="stylesheet"  type="text/css" />
   <link href="https://smsrouter.letexto.com/css/datatables.bundle.css" rel="stylesheet"  type="text/css" />
   <link href="https://smsrouter.letexto.com/css/style.bundle.css" rel="stylesheet"  type="text/css" />
- 
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="./accueil/assets/icons/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./accueil/assets/css/w3pro-4.13.css">
   <link rel="stylesheet" href="./accueil/assets/css/w3-theme.css">
   <link rel="stylesheet" href="./accueil/assets/css/admin-styles.css">
   <link rel="stylesheet" href="./accueil/assets/css/scrollbar.css">
- 
-    
 </head>
 
 <body class="w3-light-grey">
@@ -34,7 +33,7 @@
         <div class="admin-logo w3-bar-item w3-hide-medium w3-hide-small">
           <h5 class="" style="line-height:1; margin:0!important; font-weight:300">
             <a href="./accueil/index.html" class="w3-button w3-bold">
-              <img src="./accueil/assets/admin-logo.png" alt="w3mix" class="w3-image" width="26">Aroli Sender </a>
+              Aroli Sender </a>
           </h5>
         </div>
         <label for="sidebar-control" class="w3-button w3-large w3-opacity-min"><i class="fa fa-bars"></i></label>
@@ -44,17 +43,17 @@
           </div>
           <input type="text" class="w3-input w3-border w3-round w3-small w3-padding-small w3-gray-lighter w3-show-inline-block" placeholder="Enter keywords">
         </div> --}}
-        <div class="w3-right">
+        {{-- <div class="w3-right">
           <button type="button" class="w3-button w3-large w3-opacity-min"><i class="fa fa-envelope-open"></i></button>
           <button type="button" class="w3-button w3-large w3-opacity-min"><i class="fa fa-bell"></i></button>
-        </div>
-        <div class="text-right">
+        </div> --}}
+        {{-- <div class="text-right">
           <div class="w3-button">
             <div class="w3-circle w3-center w3-text-white w3-primary" style="width:38px; height:38px">
               <i class="fa fa-fw fa-user fa" style="margin-top:11px"></i>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
     <nav id="sidebar" class="w3-sidebar w3-top w3-bottom w3-collapse w3-white w3-border-right w3-border-top scrollbar" style="z-index:3;width:230px;height:auto;margin-top:54px;border-color:rgba(0, 0, 0, .1)!important" id="mySidebar">
@@ -77,18 +76,19 @@
         
         <a href="/actions" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-table"></i>&nbsp; Action </a>
-        <a href="./accueil/profile.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
+        {{-- <a href="./accueil/profile.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-user-circle"></i>&nbsp; Profile </a>
         <a href="./accueil/login.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
           <i class="fa fa-fw fa-lock"></i>&nbsp; Login </a>
         <a href="./accueil/register.html" class="w3-bar-item w3-button w3-padding-large w3-hover-text-primary">
-          <i class="fa fa-fw fa-sign-in"></i>&nbsp; Registration </a>
+          <i class="fa fa-fw fa-sign-in"></i>&nbsp; Registration </a> --}}
       </div>
     </nav>
   @yield('dashboard')
   @yield('formulaire')
   @yield('search')
   @yield('actions')
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script type="text/javascript" src="https://smsrouter.letexto.com/js/prismjs.bundle.js"></script>
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/popper.min.js"></script>
     <script type="text/javascript" src="https://smsrouter.letexto.com/js/scripts.bundle.js"></script>
@@ -98,23 +98,31 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
   <script src="./accueil/assets/plugins/chartjs/Chart.min.js"></script>
   <script src="./accueil/assets/plugins/chartjs/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-
-
-{{-- <script>
-    document.getElementById('showSearchForm').addEventListener('click', function() {
-        const searchForm = document.getElementById('searchForm');
-        // Toggle visibility
-        searchForm.style.display = searchForm.style.display === 'none' ? 'block' : 'none';
+  <script>
+    //les selects pour la vue form
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Search an operator",
+            allowClear: true
+        });
     });
-</script> --}}
 
+    $(document).ready(function() {
+        $('.select3').select2({
+            placeholder: "Search a Country",
+            allowClear: true
+        });
+    });
+</script>
 <script>
   $('#detailModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
@@ -193,78 +201,200 @@
 </script>
 <script>
   
-  function openEditModal(id) {
-      // Récupérer les données de l'enregistrement via AJAX
-      $.ajax({
-          url: '/get-registry-details/' + id,
-          method: 'GET',
-          success: function(data) {
-              // Remplir le formulaire modal avec les données
-              $('#editRecordId').val(data.id);
-              $('#editName').val(data.name);
-              $('#editOperator').val(data.operator);
-              $('#editCountry').val(data.country);
-              $('#editStatus').val(data.status);
+  // function openEditModal(id) {
+  //     // Récupérer les données de l'enregistrement via AJAX
+  //     $.ajax({
+  //         url: '/get-registry-details/' + id,
+  //         method: 'GET',
+  //         success: function(data) {
+  //             // Remplir le formulaire modal avec les données
+  //             $('#editRecordId').val(data.id);
+  //             $('#editName').val(data.name);
+  //             $('#editOperator').val(data.operator);
+  //             $('#editCountry').val(data.country);
+  //             $('#editStatus').val(data.status);
               
-              // Afficher la modal
-              new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
-          },
-          error: function(xhr) {
-              alert('Erreur lors de la récupération des données');
-          }
-      });
-  }
+  //             // Afficher la modal
+  //             new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
+  //         },
+  //         error: function(xhr) {
+  //             alert('Erreur lors de la récupération des données');
+  //         }
+  //     });
+  // }
   
 
 
-  // Fonction de mise à jour
-  $('#updateButton').click(function() {
-      var formData = $('#editForm').serialize();
+  // // Fonction de mise à jour
+  // $('#updateButton').click(function() {
+  //     var formData = $('#editForm').serialize();
       
-      $.ajax({
-          url: '/update-registry',
-          method: 'POST',
-          data: formData,
-          success: function(response) {
-              if(response.success) {
-                  alert('Enregistrement mis à jour avec succès');
-                  location.reload(); // Recharger la page pour voir les modifications
-              } else {
-                  alert('Erreur lors de la mise à jour');
-              }
-          },
-          error: function(xhr) {
-              alert('Erreur lors de la mise à jour');
-          }
-      });
-  });
+  //     $.ajax({
+  //         url: '/update-registry',
+  //         method: 'POST',
+  //         data: formData,
+  //         success: function(response) {
+  //             if(response.success) {
+  //                 alert('Enregistrement mis à jour avec succès');
+  //                 location.reload(); // Recharger la page pour voir les modifications
+  //             } else {
+  //                 alert('Erreur lors de la mise à jour');
+  //             }
+  //         },
+  //         error: function(xhr) {
+  //             alert('Erreur lors de la mise à jour');
+  //         }
+  //     });
+  // });
   
-  // Fonction de suppression
-  $('#deleteButton').click(function() {
-      var id = $('#editRecordId').val();
+  // // Fonction de suppression
+  // $('#deleteButton').click(function() {
+  //     var id = $('#editRecordId').val();
       
-      if(confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-          $.ajax({
-              url: '/delete-registry/' + id,
-              method: 'DELETE',
-              data: {
-                  '_token': '{{ csrf_token() }}'
-              },
-              success: function(response) {
-                  if(response.success) {
-                      alert('Enregistrement supprimé avec succès');
-                      location.reload(); // Recharger la page
-                  } else {
-                      alert('Erreur lors de la suppression');
-                  }
-              },
-              error: function(xhr) {
-                  alert('Erreur lors de la suppression');
-              }
-          });
-      }
-  });
+  //     if(confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
+  //         $.ajax({
+  //             url: '/delete-registry/' + id,
+  //             method: 'DELETE',
+  //             data: {
+  //                 '_token': '{{ csrf_token() }}'
+  //             },
+  //             success: function(response) {
+  //                 if(response.success) {
+  //                     alert('Enregistrement supprimé avec succès');
+  //                     location.reload(); // Recharger la page
+  //                 } else {
+  //                     alert('Erreur lors de la suppression');
+  //                 }
+  //             },
+  //             error: function(xhr) {
+  //                 alert('Erreur lors de la suppression');
+  //             }
+  //         });
+  //     }
+  // });
+// ********************************************************************************************************
+$(document).ready(function() {
+        // Appliquer Select2 au champ select
+        $('.select4').select2({
+            dropdownParent: $('#editDeleteModal'), // Positionner le dropdown au dessus de la modale
+            width: '100%' 
+        });
 
+        $('.select5').select2({
+            dropdownParent: $('#editDeleteModal'), // Positionner le dropdown au dessus de la modale
+            width: '100%' 
+        });
+    });
+  function openEditModal(id) {
+    // Récupérer les données de l'enregistrement via AJAX
+    $.ajax({
+        url: '/get-registry-details/' + id,
+        method: 'GET',
+        success: function(data) {
+            // Remplir le formulaire modal avec les données
+            $('#editRecordId').val(data.id);
+            $('#editName').val(data.name);
+            // $('#editOperator').val(data.operator);
+            // $('#editCountry').val(data.country);
+            $('#editStatus').val(data.status);
+            
+            // Afficher la modal
+            new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
+        },
+        error: function(xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Erreur lors de la récupération des données'
+            });
+        }
+    });
+}
+
+// Fonction de mise à jour
+$('#updateButton').click(function() {
+    var formData = $('#editForm').serialize();
+    
+    $.ajax({
+        url: '/update-registry',
+        method: 'POST',
+        data: formData,
+        success: function(response) {
+            if(response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: 'Enregistrement mis à jour avec succès'
+                }).then(() => {
+                    location.reload(); // Recharger la page pour voir les modifications
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Erreur lors de la mise à jour'
+                });
+            }
+        },
+        error: function(xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Erreur lors de la mise à jour'
+            });
+        }
+    });
+});
+
+// Fonction de suppression
+$('#deleteButton').click(function() {
+    var id = $('#editRecordId').val();
+    
+    Swal.fire({
+        title: 'Êtes-vous sûr ?',
+        text: 'Vous ne pourrez pas revenir en arrière !',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Oui, supprimer !'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/delete-registry/' + id,
+                method: 'DELETE',
+                data: {
+                    '_token': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if(response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Succès',
+                            text: 'Enregistrement supprimé avec succès'
+                        }).then(() => {
+                            location.reload(); // Recharger la page
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur',
+                            text: 'Erreur lors de la suppression'
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur',
+                        text: 'Erreur lors de la suppression'
+                    });
+                }
+            });
+        }
+    });
+});
+// **********************************************************************************
   
   </script>
 {{-- <script>
@@ -401,21 +531,5 @@
        });
 
     </script>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>

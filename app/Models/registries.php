@@ -12,6 +12,7 @@ class registries extends Model
         'name',
         'operator',
         'country',
+        'country_id',
         'status',
         'date_sub',
         'date_valid',

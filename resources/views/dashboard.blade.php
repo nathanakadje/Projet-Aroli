@@ -12,7 +12,7 @@
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-info" style="width:100%;height:3px;"></div>
                 </div>
-                <p>Total Senders <span class="w3-right">100%</span></p>
+                <p>Total <span class="w3-right">100%</span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container w3-border-right">
@@ -21,7 +21,7 @@
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-success" style="width:{{ $stats['valide']['percentage'] }}%;height:3px;"></div>
                 </div>
-                <p>Valid Senders <span class="w3-right">{{ $stats['valide']['percentage'] }}%</span></p>
+                <p>Validated <span class="w3-right">{{ $stats['valide']['percentage'] }}%</span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container w3-border-right">
@@ -30,7 +30,7 @@
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-warning" style="width:{{ $stats['pending']['percentage'] }}%;height:3px;"></div>
                 </div>
-                <p>Pending Senders <span class="w3-right">{{ $stats['pending']['percentage'] }}%</span></p>
+                <p>Pending  <span class="w3-right">{{ $stats['pending']['percentage'] }}%</span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container">
@@ -39,7 +39,7 @@
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-danger" style="width:{{ $stats['close']['percentage'] }}%;height:3px;"></div>
                 </div>
-                <p>Closed Senders <span class="w3-right">{{ $stats['close']['percentage'] }}%</span></p>
+                <p>Rejected <span class="w3-right">{{ $stats['close']['percentage'] }}%</span></p>
             </div>
           </div>
         </div>
@@ -49,8 +49,9 @@
           <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
             <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Sender Traffic</header>
             <div class="w3-bar w3-padding">
-              <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #14abef"></i> New Visitor</div>
-              <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #ade2f9"></i> Old Visitor</div>
+              <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #f5de0f"></i> </div>
+              <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #56d80b"></i></div>
+              <div class="w3-bar-item w3-text-dark w3-padding-small"><i class="fa fa-circle" style="color: #e6438f"></i></div>
             </div>
             <div class="w3-padding-large" style="height: 256px;position:relative">
               <div style="width: 80%; margin: 50px auto;">
@@ -72,11 +73,11 @@
                 
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i>  Valide</td>
+                <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i>  Validated</td>
                
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #d13adf"></i> close</td>
+                <td><i class="fa fa-circle mr-2" style="color: #d13adf"></i> Rejected</td>
                 
               </tr>
               

@@ -112,23 +112,23 @@ document.addEventListener('DOMContentLoaded', function() {
 						{
 							label: 'Pending',
 							data: data.pending,
-							borderColor: 'rgba(255, 99, 132, 1)',
+							borderColor: 'rgba(255, 206, 86)',
 							backgroundColor: 'rgba(255, 99, 132, 0.2)',
 							borderWidth: 2,
 							fill: true,
 						},
 						{
-							label: 'Valide',
+							label: 'Valited',
 							data: data.valide,
-							borderColor: 'rgba(54, 162, 235, 1)',
+							borderColor: 'rgba(0, 128, 0, 0.9)',
 							backgroundColor: 'rgba(54, 162, 235, 0.2)',
 							borderWidth: 2,
 							fill: true,
 						},
 						{
-							label: 'Close',
+							label: 'Rejeted',
 							data: data.close,
-							borderColor: 'rgba(255, 206, 86, 1)',
+							borderColor: 'rgba(255, 99, 132)',
 							backgroundColor: 'rgba(255, 206, 86, 0.2)',
 							borderWidth: 2,
 							fill: true,
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.statusChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Pending', 'Valide', 'Close'],
+                labels: ['Pending', 'Valide', 'Rejected'],
                 datasets: [{
                     data: [data.pending, data.valide, data.close],
                     backgroundColor: [

@@ -7,6 +7,7 @@ use App\Http\Controllers\SearchController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ Route::get('/', function () {
 //Return the login view
 Route::get('/login', [UserController::class, 'form_login'])->name('login');
 Route::post('/login', [UserController::class, 'login']);
+
+Route::get('/forgot-password', [UserController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('/forgot-password', [UserController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [UserController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [UserController::class, 'resetPassword'])->name('password.update');
 
 //Return the login and register view
 Route::get('/register', [UserController::class, 'form_register']);
@@ -69,3 +75,23 @@ Route::get('/get-status-statistics', [DashboardController::class, 'getStatusStat
 // Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 Route::get('/dashboard', [DashboardController::class, 'getStatusStatistics']);
 Route::get('/status-chart-data', [DashboardController::class, 'getStatusChartData']);
+
+
+// Route::get('/forgot-password', 'UserController@showForgotPasswordForm')->name('password.request');
+// Route::post('/forgot-password', 'UserController@sendResetLinkEmail')->name('password.email');
+// Route::get('/reset-password/{token}', 'UserController@showResetForm')->name('password.reset');
+// Route::post('/reset-password', 'UserController@resetPassword')->name('password.update');
+
+
+
+// Route::get('/test-mail', function () {
+//     try {
+//         Mail::raw('Test email', function ($message) {
+//             $message->to('christakadje@gmail.com')
+//                    ->subject('Test Email');
+//         });
+//         return 'Email envoyé avec succès!';
+//     } catch (\Exception $e) {
+//         return 'Erreur: ' . $e->getMessage();
+//     }
+// });

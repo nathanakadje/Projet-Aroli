@@ -11,15 +11,28 @@
                 <span class="login100-form-title p-b-34 p-t-27">
                     Register
                 </span>
+                <div class="wrap-input100 validate-input" data-validate = "Enter name">
+                    <input class="input100 @error('name') is-invalid @enderror" type="text" name="name" placeholder="Name">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    @error('name')
+                    <div class="text-white">{{ $message }}</div>
+                @enderror
+                </div>
 
                 <div class="wrap-input100 validate-input" data-validate = "Enter username">
-                    <input class="input100" type="text" name="email" placeholder="Email">
+                    <input class="input100 @error('email') is-invalid @enderror" type="text" name="email" placeholder="Email">
                     <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    @error('email')
+                    <div class="text-white">{{ $message }}</div>
+                @enderror
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="Enter password">
-                    <input class="input100" type="password" name="password" placeholder="Password">
+                    <input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
                     <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    @error('password')
+                    <div class="text-white">{{ $message }}</div>
+                @enderror
                 </div>
 
                 <div class="contact100-form-checkbox">

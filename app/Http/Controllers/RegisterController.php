@@ -5,35 +5,52 @@ namespace App\Http\Controllers;
 
 use App\Models\registries;
 use App\Models\registry;
+use App\Models\country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
 //  ********************************************************************************************  
-   
-    
+
         public function store(Request $request){
+        // Règles de validation de base
+    $rules = [
+        'name' => 'required|max:11',
+        'operator' => 'required|string|max:20',
+        'country' => 'required|string|',
+        'status' => 'required|in:close,pending,valide',
+        'date_sub' => 'required|date|before_or_equal:today',
+    ];
+            // $this->validate($request, [
+            //     'name' => 'required|max:11',
+            //     'operator' => 'required|max:20',
         
-            $this->validate($request, [
-                'name' => 'required|max:11',
-                'operator' => 'required|max:20',
-                'country' => 'required|max:20',
-                'status' => 'required|in:close,pending,valide',
-                'date_sub' => 'required|date|before_or_equal:today',
-                'date_valid' => 'required_if:status,valide,close',
-                'commentaire' => 'required_if:status,close',
+            //     'country_id' => 'required|exists:countries,id',
+            //     'status' => 'required|in:close,pending,valide',
+            //     'date_sub' => 'required|date|before_or_equal:today',
+            //     'date_valid' => 'required_if:status,valide,close',
+            //     'commentaire' => 'required_if:status,close',
                 
-            ]);
-    
-            if ($request->status === 'close') {
-                $rules['date_valid'] = 'required|date|nullable|after_or_equal:date_sub';
-                $rules['commentaire'] = 'required|string';
-            } else {
-                $rules['date_valid'] = 'nullable|date';
-                $rules['commentaire'] = 'nullable|string';
-            }
-            
+            // ]);
+     // Logique conditionnelle des règles
+     if ($request->status === 'valide') {
+        $rules['date_valid'] = 'required|date|after_or_equal:date_sub';
+    } else {
+        $rules['date_valid'] = 'nullable|date';
+    }
+
+    if ($request->status === 'close') {
+        $rules['commentaire'] = 'required|string';
+    } else {
+        $rules['commentaire'] = 'nullable|string';
+    }
+    if ($request->status === 'pending') {
+        $rules['date_valid'] = 'nullable'; // Permet à `date_valid` de ne pas être soumis à validation
+    } else {
+        $rules['date_valid'] = 'required|date'; // Si le statut est autre que 'pending', `date_valid` est requis et doit être une date valide
+    }
             
             $messages = [
                 'name.required' => 'Le nom est obligatoire',
@@ -46,22 +63,22 @@ class RegisterController extends Controller
                 'status.in' => 'Le statut doit être close, pending ou valide',
                 'date_sub.required' => 'La date de soumission est obligatoire',
                 'date_sub.date' => 'La date de soumission doit être une date valide',
-                'date_valid.required' => 'La date de validation est obligatoire pour le statut valide ou close',
+                'date_valid.required' => 'La date de validation est obligatoire pour le statut valide',
                 'date_valid.date' => 'La date de validation doit être une date valide',
                 'commentaire.required' => 'Le commentaire est obligatoire pour le statut close',
                 
             ];
+             // Validation des données
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    // Vérifier si la validation échoue
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
     
             try {
-    // Validation
-                $validator = Validator::make($request->all(), $rules, $messages);
-    
-                // if ($validator->fails()) {
-                //     return response()->json([
-                //         'status' => 'error',
-                //         'errors' => $validator->errors()
-                //     ], 422);
-                // }
     
                 $sender = new registry();
                 $sender->name = $request->name;

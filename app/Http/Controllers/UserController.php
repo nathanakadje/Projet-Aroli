@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\admins;
-use App\Models\registries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\ValidName;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use App\Mail\ResetPasswordMail;
 
 class UserController extends Controller
 {
@@ -22,15 +29,39 @@ class UserController extends Controller
     public function form_traitement(Request $request)
     {
          $request->validate([
+            'name' => ['required', 'max:11', new ValidName],
             'email' => 'email|required|unique:admins',
             'password' => 'required|min:8'
          ]);
-         $user = new admins();
-         $user->email = $request->input('email');
-         $user->password = Hash::make($request->input('password'));
-         $user->save();
-         
-         return redirect('/login');
+         $messages = [
+
+             'name.required' => 'Le nom est obligatoire',
+             'email.required' => 'L\'email est obligatoire',
+             'email.unique' => 'L\'email saisie exite déjà',
+            'password.required' => 'le password est  obligatoire',
+            'password.min' => 'Saisie au moins huit caractère',
+
+         ];
+         try {
+            $validator = Validator::make($request->all(), $messages);
+
+            $verificationToken = Str::random(64);
+            $user = new admins();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
+            $user->token = $verificationToken;
+            $user->save();
+            
+            return redirect('/dashboard');
+         } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Une erreur est survenue lors de la création',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+        
     }
 
 // ***********************Traitement des donnees de la page login*****************************
@@ -57,7 +88,102 @@ class UserController extends Controller
             return back()->with('status', 'désole vous n\'avez pas de compte client.');
         }
     }
+// -------------------------------------------------------------------------------------
+public function showForgotPasswordForm()
+{
+    return view('forgot-password');
+}
 
-    // *******************************************************
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:admins,email',
+        ], [
+            'email.required' => 'L\'email est obligatoire',
+            'email.email' => 'Format d\'email invalide',
+            'email.exists' => 'Cet email n\'existe pas dans notre base de données',
+        ]);
 
+        $token = Str::random(64);
+        
+        DB::table('password_reset_tokens')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+
+        Mail::send('emails.forgot-password', ['token' => $token], function($message) use($request){
+            $message->to($request->email);
+            $message->subject('Réinitialisation de mot de passe');
+        });
+
+        return back()->with('status', 'Nous vous avons envoyé un email de réinitialisation de mot de passe!');
+    }
+
+    public function showResetForm($token)
+    {
+        return view('reset-password', ['token' => $token]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:admins,email',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required',
+            'token' => 'required'
+        ]);
+
+        $updatePassword = DB::table('password_reset_tokens')
+            ->where([
+                'email' => $request->email,
+                'token' => $request->token
+            ])->first();
+
+        if(!$updatePassword){
+            return back()->withInput()->with('error', 'Token invalide!');
+        }
+
+        admins::where('email', $request->email)
+            ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_reset_tokens')->where(['email'=> $request->email])->delete();
+
+        return redirect('/login')->with('status', 'Votre mot de passe a été modifié!');
+    }
+    // public function sendResetLink(Request $request)
+    // {
+    //     $request->validate([
+    //         'email' => 'required|email|exists:admins,email',
+    //     ], [
+    //         'email.required' => 'L\'email est obligatoire',
+    //         'email.email' => 'Veuillez saisir un email valide',
+    //         'email.exists' => 'Cet email n\'existe pas dans notre base de données',
+    //     ]);
+
+    //     try {
+    //         $token = Str::random(64);
+
+    //         // Supprimer les anciens tokens pour cet email
+    //         DB::table('password_reset_tokens')
+    //             ->where('email', $request->email)
+    //             ->delete();
+
+    //         // Insérer le nouveau token
+    //         DB::table('password_reset_tokens')->insert([
+    //             'email' => $request->email,
+    //             'token' => $token,
+    //             'created_at' => now()
+    //         ]);
+
+    //         // Envoi de l'email
+    //         Mail::to($request->email)->send(new ResetPasswordMail($token, $request->email));
+
+    //         return back()->with('status', 'Nous vous avons envoyé un lien de réinitialisation par email!');
+            
+    //     } catch (\Exception $e) {
+    //         Log::error('Erreur d\'envoi d\'email: ' . $e->getMessage());
+    //         return back()->with('error', 'Une erreur est survenue lors de l\'envoi de l\'email. Veuillez réessayer.');
+    //     }
+    // }
 }

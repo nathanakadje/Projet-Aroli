@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('operator');
-            $table->string('country');
+            $table->string('country')->nullable();
+             // Clé étrangère vers countries
+            $table->timestamps();
             $table->enum('status', ['close', 'pending', 'valide']);
             $table->date('date_sub');
             $table->date('date_valid')->nullable();
@@ -30,5 +32,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('registry');
+        
     }
 };

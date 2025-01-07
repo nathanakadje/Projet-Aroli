@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('postes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('admins', function (Blueprint $table) {
+            //
+            $table->string('name')->nullable();
         });
     }
 
@@ -22,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('postes');
+        Schema::table('admins', function (Blueprint $table) {
+            //
+            $table->dropColumn('name');
+        });
     }
 };
