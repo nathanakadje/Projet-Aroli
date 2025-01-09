@@ -12,7 +12,7 @@
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-info" style="width:100%;height:3px;"></div>
                 </div>
-                <p>Total <span class="w3-right">100%</span></p>
+                <p>Total <span class="w3-right"></span></p>
             </div>
           </div>
           <div class="w3-col l3 w3-container w3-border-right">
@@ -77,7 +77,7 @@
                
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #d13adf"></i> Rejected</td>
+                <td><i class="fa fa-circle mr-2" style="color: #e036a7"></i> Rejected</td>
                 
               </tr>
               

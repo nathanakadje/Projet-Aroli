@@ -76,14 +76,6 @@ Route::get('/get-status-statistics', [DashboardController::class, 'getStatusStat
 Route::get('/dashboard', [DashboardController::class, 'getStatusStatistics']);
 Route::get('/status-chart-data', [DashboardController::class, 'getStatusChartData']);
 
-
-// Route::get('/forgot-password', 'UserController@showForgotPasswordForm')->name('password.request');
-// Route::post('/forgot-password', 'UserController@sendResetLinkEmail')->name('password.email');
-// Route::get('/reset-password/{token}', 'UserController@showResetForm')->name('password.reset');
-// Route::post('/reset-password', 'UserController@resetPassword')->name('password.update');
-
-
-
 // Route::get('/test-mail', function () {
 //     try {
 //         Mail::raw('Test email', function ($message) {

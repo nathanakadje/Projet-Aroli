@@ -88,7 +88,7 @@ class UserController extends Controller
             return back()->with('status', 'désole vous n\'avez pas de compte client.');
         }
     }
-// -------------------------------------------------------------------------------------
+// ----------------------------------------------------Reset password---------------------------------
 public function showForgotPasswordForm()
 {
     return view('forgot-password');
