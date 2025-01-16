@@ -99,18 +99,19 @@ input:disabled {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(150, 148, 148, 0.712);
-  color: white;
+  background: rgba(240, 240, 240, 0.85); /* Couleur de fond claire et douce */
+  color: #333; /* Couleur de texte plus foncée pour une meilleure lisibilité */
   z-index: 1000;
   justify-content: center;
   align-items: center;
 }
 
 .search-box {
-  background: #222;
+  background: #fff; /* Fond blanc pour un contraste doux */
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet de profondeur */
 }
 
 .search-box input,
@@ -118,28 +119,35 @@ input:disabled {
 .search-box select {
   width: 100%;
   margin: 10px 0;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #ddd; /* Bordure douce */
+  border-radius: 8px;
 }
 
 .search-box input {
-  background: #444;
-  color: white;
+  background: #f9f9f9; /* Fond très clair pour le champ de saisie */
+  color: #333; /* Texte sombre pour une bonne lisibilité */
 }
+
 .search-box select {
-  background: #444;
-  color: white;
+  background: #f9f9f9;
+  color: #333;
 }
 
 .search-box button {
-  background: #007bff;
+  background: #4CAF50; /* Vert doux pour un appel à l'action apaisant */
   color: white;
+  border: none;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .search-box button:hover {
-  background: #0056b3;
+  background: #45a049; /* Changement de couleur lors du survol pour un effet subtil */
+}
+
+.search-box button:active {
+  background: #388e3c; /* Couleur légèrement plus foncée lorsque le bouton est cliqué */
 }
 
 .result {
@@ -248,8 +256,13 @@ a:not(.w3-button):hover { text-decoration: underline } */
 .select2-container--default .select4-dropdown  .select5-dropdown {
   z-index: 1050 !important; /* S'assurer que le dropdown est au-dessus des autres éléments */
 }
-#operator{
-  z-index: 1050;
+/* Définir la couleur du texte de l'élément select */
+.select6 .select2-container .select2-selection__rendered {
+  color: black; /* Le texte affiché dans le select sera noir */
+}
+
+.select6-dropdown .select2-results__option {
+  color: black; /* Le texte des options dans le dropdown sera noir */
 }
 #app .w3-main {
   margin-left: 230px;

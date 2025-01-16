@@ -101,7 +101,7 @@
                                 <td>{{ \Carbon\Carbon::parse($senders->date_valid)->format('d/m/Y') }}</td> --}}
                         
                                 <td>
-                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(161, 1, 1, 0.822)">Edit</span></a>
+                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(161, 1, 1, 0.822)">Actions</span></a>
                                     {{-- <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(243, 10, 10, 0.801)">Delete</span></a> --}}
                                
                                 </td>
@@ -328,11 +328,11 @@
                                                     </select>     
                                                 </div>
                                                 
-                                                <div class="mb-3">
-                                                    <label for="editCountry" class="form-label">Country</label>
+                                                
+                                                    {{-- <label for="editCountry" class="form-label">Country</label> --}}
                                                     
                                                     <select class="w3-input w3-border w3-round form-control select4" id="editCountry" name="country"  required style="width: 100%;">
-                                                        <option value=""></option>
+                                                        <option value="">Country</option>
                                                         <option value="ALGERIA">ALGERIA</option>
                                                         <option value="ANGOLA">ANGOLA</option>
                                                         <option value="BENIN">BENIN</option>
@@ -511,7 +511,7 @@
                                                         <option value="ZAMBIA">ZAMBIA</option>
                                                         <option value="ZIMBABWE">ZIMBABWE</option>      
                                                     </select>
-                                                </div>
+                                               
                                                 
                                                 <div class="mb-3">
                                                     <label for="editStatus" class="form-label">Status</label>

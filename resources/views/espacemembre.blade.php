@@ -284,6 +284,14 @@ $(document).ready(function() {
             dropdownParent: $('#editDeleteModal'), // Positionner le dropdown au dessus de la modale
             width: '100%' 
         });
+         $('.select6').select2({
+            dropdownParent: $('#searchWindow'), // Positionner le dropdown au dessus de la modale
+            width: '100%' 
+        });
+        $('.select7').select2({
+            dropdownParent: $('#searchWindow'), // Positionner le dropdown au dessus de la modale
+            width: '100%' 
+        });
     });
   function openEditModal(id) {
     // Récupérer les données de l'enregistrement via AJAX
