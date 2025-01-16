@@ -101,7 +101,7 @@
                                 <td>{{ \Carbon\Carbon::parse($senders->date_valid)->format('d/m/Y') }}</td> --}}
                         
                                 <td>
-                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(161, 1, 1, 0.822)">Actions</span></a>
+                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(161, 1, 1, 0.822)">Edit</span></a>
                                     {{-- <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(243, 10, 10, 0.801)">Delete</span></a> --}}
                                
                                 </td>
@@ -140,6 +140,7 @@
                                                 <div class="mb-3">
                                                     <label for="editOperator" class="form-label">Operator</label>
                                                     <select class="w3-input w3-border w3-round form-control select5" id="editOperator" name="operator"  required style="width: 100%;">
+                                                        <option value=""></option>
                                                         <option value="Algeria Djezzy">Algeria Djezzy</option>
                                                         <option value="Algeria Mobilis">Algeria Mobilis</option>
                                                         <option value="Algeria Ooredoo">Algeria Ooredoo</option>
@@ -331,6 +332,7 @@
                                                     <label for="editCountry" class="form-label">Country</label>
                                                     
                                                     <select class="w3-input w3-border w3-round form-control select4" id="editCountry" name="country"  required style="width: 100%;">
+                                                        <option value=""></option>
                                                         <option value="ALGERIA">ALGERIA</option>
                                                         <option value="ANGOLA">ANGOLA</option>
                                                         <option value="BENIN">BENIN</option>
@@ -516,14 +518,14 @@
                                                     <select class="form-select" id="editStatus" name="status" required>
                                                         <option value="pending">Pending</option>
                                                         <option value="valide">Valide</option>
-                                                        <option value="close">Close</option>
+                                                        <option value="close">Rejeté</option>
                                                     </select>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger btn-sm " id="deleteButton">Delete</button>
-                                            <button type="button" class="btn btn-primary btn-sm" id="updateButton">Edit</button>
+                                            <button type="button" class="btn btn-primary btn-sm" id="updateButton">Save</button>
                                         </div>
                                     </div>
                                 </div>

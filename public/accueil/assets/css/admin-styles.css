@@ -248,6 +248,9 @@ a:not(.w3-button):hover { text-decoration: underline } */
 .select2-container--default .select4-dropdown  .select5-dropdown {
   z-index: 1050 !important; /* S'assurer que le dropdown est au-dessus des autres éléments */
 }
+#operator{
+  z-index: 1050;
+}
 #app .w3-main {
   margin-left: 230px;
   transition: none;

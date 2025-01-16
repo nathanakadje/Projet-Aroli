@@ -8,7 +8,7 @@
         <div class="w3-row status-statistics">
           <div class="w3-col l3 w3-container w3-border-right ">
             <div class="w3-padding status-stats" >
-              <h4>{{ $stats['total']['count'] }} <span class="w3-right"><i class="fa fa-eye" aria-hidden="true"></i></i></span></h4> 
+              <h4>{{ $stats['total']['count'] }} <span class="w3-right"><i aria-hidden="true"></i></i></span></h4> 
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-info" style="width:100%;height:3px;"></div>
                 </div>
@@ -87,7 +87,7 @@
       </div>
 
       <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
-        <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Recent Order Tables</header>
+        <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Newly registered sender</header>
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}

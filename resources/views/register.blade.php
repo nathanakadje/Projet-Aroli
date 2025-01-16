@@ -44,17 +44,17 @@
 
                 <div class="container-login100-form-btn">
                     <button class="login100-form-btn">
-                        Login
+                        Sign up
                     </button>
                 </div>
                 @if (session('status'))
                 
-                        <a href="#"  class="txt1 " >{{ session('status') }}</a>  
+                        <a href="#"  class="txt1 text-green" >{{ session('status') }}</a>  
                 
                  @endif
 
                 <div class="text-center p-t-40">
-                    <a class="txt1" href="/login">
+                    <a class="txt1 text-white" href="/login">
                         Have an account
                     </a>
                 </div>
