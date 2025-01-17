@@ -8,7 +8,7 @@
         <div class="w3-right card-toolbar mb-3"style="margin-right: 15px"> 
           <h4>
             <button type="button" class="btn btn-sm text-white w3-margin-top w3-round" id="searchBtn" style="background-color: rgba(36, 83, 187, 1);">
-              <i class="fa fa-search text-white"></i>search</button>
+             search</button>
           </h4>
         </div>
 
@@ -20,7 +20,7 @@
       <div class="dropdown">
           <!-- Bouton principal avec une icône et un libellé -->
           <button class="btn btn-sm btn-success dropdown-toggle text-white w3-margin-top" type="button" id="exportCsvBtn" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-download"></i> Exporter
+             Exporter
           </button>
       
           <!-- Menu déroulant contenant les options d'exportation -->

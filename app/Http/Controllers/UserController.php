@@ -31,15 +31,21 @@ class UserController extends Controller
          $request->validate([
             'name' => ['required', 'max:11', new ValidName],
             'email' => 'email|required|unique:admins',
-            'password' => 'required|min:8'
+            'password' => [
+        'required',
+        'min:8',
+        'regex:/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).+$/',
+    ],
          ]);
          $messages = [
 
              'name.required' => 'Le nom est obligatoire',
              'email.required' => 'L\'email est obligatoire',
              'email.unique' => 'L\'email saisie exite déjà',
+             'email.email' => 'Format d\'email invalide',
             'password.required' => 'le password est  obligatoire',
             'password.min' => 'Saisie au moins huit caractère',
+            'password.regex' => 'Le mot de passe doit contenir au moins un caractère spécial.',
 
          ];
          try {
