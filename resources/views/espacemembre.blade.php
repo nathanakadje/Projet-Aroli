@@ -281,13 +281,26 @@ $(document).ready(function() {
         });
 
         $('.select5').select2({
+    
             dropdownParent: $('#editDeleteModal'), // Positionner le dropdown au dessus de la modale
             width: '100%' 
         });
-         $('.select6').select2({
-            dropdownParent: $('#searchWindow'), // Positionner le dropdown au dessus de la modale
-            width: '100%' 
+        //  $('.select6').select2({
+        //     dropdownParent: $('#searchWindow'), // Positionner le dropdown au dessus de la modale
+        //     width: '100%' 
+        // });
+        $(document).ready(function() {
+        $('.select7').select2({
+            placeholder: "Search an operator",
+            allowClear: true
         });
+    });
+        $(document).ready(function() {
+        $('.select6').select2({
+            placeholder: "Search a country",
+            allowClear: true
+        });
+    });
         $('.select7').select2({
             dropdownParent: $('#searchWindow'), // Positionner le dropdown au dessus de la modale
             width: '100%' 

@@ -139,7 +139,7 @@
                                                 
                                                 <div class="mb-3">
                                                     <label for="editOperator" class="form-label">Operator</label>
-                                                    <select class="w3-input w3-border w3-round form-control select5" id="editOperator" name="operator"  required style="width: 100%;">
+                                                    <select class="w3-input w3-border w3-round form-control select5" id="editOperator" name="operator"   style="width: 100%;">
                                                         <option value=""></option>
                                                         <option value="Algeria Djezzy">Algeria Djezzy</option>
                                                         <option value="Algeria Mobilis">Algeria Mobilis</option>
@@ -328,11 +328,11 @@
                                                     </select>     
                                                 </div>
                                                 
-                                                
-                                                    {{-- <label for="editCountry" class="form-label">Country</label> --}}
+                                                <div class="mb-3">
+                                                    <label for="editCountry" class="form-label">Country</label>
                                                     
-                                                    <select class="w3-input w3-border w3-round form-control select4" id="editCountry" name="country"  required style="width: 100%;">
-                                                        <option value="">Country</option>
+                                                    <select class="w3-input w3-border w3-round form-control select4" id="editCountry" name="country"   style="width: 100%;">
+                                                        <option value=""></option>
                                                         <option value="ALGERIA">ALGERIA</option>
                                                         <option value="ANGOLA">ANGOLA</option>
                                                         <option value="BENIN">BENIN</option>
@@ -511,7 +511,7 @@
                                                         <option value="ZAMBIA">ZAMBIA</option>
                                                         <option value="ZIMBABWE">ZIMBABWE</option>      
                                                     </select>
-                                               
+                                                </div>
                                                 
                                                 <div class="mb-3">
                                                     <label for="editStatus" class="form-label">Status</label>

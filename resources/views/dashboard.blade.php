@@ -39,7 +39,7 @@
                 <div class="progress w3-light" style="height:3px;">
                     <div class="progress-bar w3-danger" style="width:{{ $stats['close']['percentage'] }}%;height:3px;"></div>
                 </div>
-                <p>Rejected <span class="w3-right">{{ $stats['close']['percentage'] }}%</span></p>
+                <p>Rejected<span class="w3-right">{{ $stats['close']['percentage'] }}%</span></p>
             </div>
           </div>
         </div>
@@ -73,11 +73,11 @@
                 
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i>  Validated</td>
+                <td><i class="fa fa-circle mr-2" style="color: #02ba5a"></i>  Validate</td>
                
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #e036a7"></i> Rejected</td>
+                <td><i class="fa fa-circle mr-2" style="color: #e036a7"></i> Rejecte</td>
                 
               </tr>
               

@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.statusChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Pending', 'Valide', 'Rejected'],
+                // labels: ['Pending', 'Valide', 'Rejecte'],
                 datasets: [{
                     data: [data.pending, data.valide, data.close],
                     backgroundColor: [

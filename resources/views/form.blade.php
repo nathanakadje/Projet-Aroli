@@ -450,7 +450,7 @@
               <select id="status" class="w3-input w3-border w3-round form-control @error('status') is-invalid @enderror" name="status">
 
                 <option value="pending" {{ old('status', 'pending') == 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="valide" {{ old('status') == 'valide' ? 'selected' : '' }}>Validé</option>
+                <option value="valide" {{ old('status') == 'valide' ? 'selected' : '' }}>Valide</option>
                 <option value="close" {{ old('status') == 'close' ? 'selected' : '' }}>Rejeté</option>
             </select>
             

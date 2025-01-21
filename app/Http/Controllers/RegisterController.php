@@ -34,23 +34,20 @@ class RegisterController extends Controller
             //     'commentaire' => 'required_if:status,close',
                 
             // ]);
-     // Logique conditionnelle des règles
-     if ($request->status === 'valide') {
-        $rules['date_valid'] = 'required|date|after_or_equal:date_sub';
-    } else {
-        $rules['date_valid'] = 'nullable|date';
-    }
-
-    if ($request->status === 'close') {
-        $rules['commentaire'] = 'required|string';
-    } else {
-        $rules['commentaire'] = 'nullable|string';
-    }
-    if ($request->status === 'pending') {
-        $rules['date_valid'] = 'nullable'; // Permet à `date_valid` de ne pas être soumis à validation
-    } else {
-        $rules['date_valid'] = 'required|date'; // Si le statut est autre que 'pending', `date_valid` est requis et doit être une date valide
-    }
+    // Logique conditionnelle des règles
+if ($request->status === 'valide') {
+    // Si le statut est "valide", la date de validation est obligatoire et doit être après ou égale à la date de soumission
+    $rules['date_valid'] = 'required|date|after_or_equal:date_sub';
+    $rules['commentaire'] = 'nullable|string'; // Le commentaire est facultatif
+} elseif ($request->status === 'close') {
+    // Si le statut est "close", le commentaire est obligatoire, et la date de validation est facultative
+    $rules['commentaire'] = 'required|string';
+    $rules['date_valid'] = 'nullable|date';
+} elseif ($request->status === 'pending') {
+    // Si le statut est "pending", la date de validation et le commentaire sont facultatifs
+    $rules['date_valid'] = 'nullable|date';
+    $rules['commentaire'] = 'nullable|string';
+}
             
             $messages = [
                 'name.required' => 'Le nom est obligatoire',
@@ -65,7 +62,7 @@ class RegisterController extends Controller
                 'date_sub.date' => 'La date de soumission doit être une date valide',
                 'date_valid.required' => 'La date de validation est obligatoire pour le statut valide',
                 'date_valid.date' => 'La date de validation doit être une date valide',
-                'commentaire.required' => 'Le commentaire est obligatoire pour le statut close',
+                'commentaire.required' => 'Le commentaire est obligatoire pour le statut rejeté',
                 
             ];
              // Validation des données

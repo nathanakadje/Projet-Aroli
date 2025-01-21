@@ -243,7 +243,7 @@
                 </div>
                 <div class="mb-3">
                 <select class="w3-input w3-border w3-round form-control select7"  name="country" style="width: 100%;">
-                    <option value="">Country</option>
+                    <option value=""></option>
                     <option value="ALGERIA">ALGERIA</option>
                     <option value="ANGOLA">ANGOLA</option>
                     <option value="BENIN">BENIN</option>
