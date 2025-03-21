@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('registries', function (Blueprint $table) {
             //
+            
         });
     }
 

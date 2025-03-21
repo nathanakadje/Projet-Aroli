@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('operator');
             $table->string('country')->nullable();
              // Clé étrangère vers countries
-            $table->timestamps();
             $table->enum('status', ['close', 'pending', 'valide']);
             $table->date('date_sub');
             $table->date('date_valid')->nullable();
