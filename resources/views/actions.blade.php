@@ -101,8 +101,8 @@
                                 <td>{{ \Carbon\Carbon::parse($senders->date_valid)->format('d/m/Y') }}</td> --}}
                         
                                 <td>
-                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(161, 1, 1, 0.822)">Edit</span></a>
-                                    {{-- <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(243, 10, 10, 0.801)">Delete</span></a> --}}
+                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(42, 106, 233, 0.822)">Edit</span></a>
+                                    <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(247, 51, 51, 0.922)">Delete</span></a>
                                
                                 </td>
                             </tr>

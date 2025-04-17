@@ -366,7 +366,48 @@ $('#updateButton').click(function() {
         }
     });
 });
-
+//Suppr
+function deleteUser(id) {
+        Swal.fire({
+            title: 'Es-tu sûr ?',
+            text: "Cette action est irréversible !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e3342f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Oui, supprimer',
+            cancelButtonText: 'Annuler'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/senders/' + id,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Supprimé !',
+                            text: 'Le sender a bien été supprimé.',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => {
+                            // Recharger la page après la suppression
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        Swal.fire(
+                            'Erreur',
+                            'Une erreur est survenue lors de la suppression.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    }
 // Fonction de suppression
 $('#deleteButton').click(function() {
     var id = $('#editRecordId').val();

@@ -48,6 +48,15 @@ public function deleteRegistry($id)
         return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
     }
 }
+//delete a record on the table
+public function destroy($id)
+{
+    $sender = registries::findOrFail($id);
+    $sender->delete();
+
+    return response()->json(['success' => true, 'message' => 'Sender supprimé avec succès']);
+}
+
     
     // public function dashboard()
     // {

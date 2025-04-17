@@ -68,6 +68,8 @@ Route::get('/actions', [ActionController::class, 'index']);
 Route::get('/get-registry-details/{id}', [ActionController::class, 'getRegistryDetails']);
 Route::post('/update-registry', [ActionController::class, 'updateRegistry']);
 Route::delete('/delete-registry/{id}', [ActionController::class, 'deleteRegistry']);
+Route::delete('/senders/{id}', [ActionController::class, 'destroy'])->name('senders.destroy');
+
 
 // ******************************************************************
 Route::get('/get-status-counts', [DashboardController::class, 'getStatusCounts']);
