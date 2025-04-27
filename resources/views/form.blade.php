@@ -42,12 +42,14 @@
               <div class="text-danger">{{ $message }}</div>
           @enderror --}}
 
+              
 
           
-            <label for="operator" class="form-label" >Operator</label>
-            <select class="w3-input w3-border w3-round form-control select2 @error('operator') is-invalid @enderror" id="operator" name="operator" style="width: 100%;">
+            <label for="operator_id" class="form-label" >Operator</label>
+            <select class="w3-input w3-border w3-round form-control select2 @error('operator_id') is-invalid @enderror" id="operator_id" name="operator_id" style="width: 100%;">
                 <option></option>
-                <option value="Algeria Djezzy">Algeria Djezzy</option>
+                <option value="">Sélectionnez un Operateur</option>
+                {{-- <option value="Algeria Djezzy">Algeria Djezzy</option>
                 <option value="Algeria Mobilis">Algeria Mobilis</option>
                 <option value="Algeria Ooredoo">Algeria Ooredoo</option>
                 <option value="Angola Africell">Angola Africell</option>
@@ -230,9 +232,9 @@
                 <option value="Benin Mtn">Benin Mtn</option>
                 <option value="Nigeria Mtn">Nigeria Mtn</option>
                 <option value="Benin Moov">Benin Moov</option>
-                <option value="Benin Sbin">Benin Sbin</option>      
+                <option value="Benin Sbin">Benin Sbin</option>       --}}
             </select>
-            @error('operator')
+            @error('operator_id')
             <div class="text-danger">{{ $message }}</div>
         @enderror
         </div> 
@@ -258,10 +260,11 @@
             </select> --}}
 
 
-            <label for="country" class="form-label">Country</label>
-            <select class="w3-input w3-border w3-round form-control select3 @error('country') is-invalid @enderror" id="country" name="country" style="width: 100%;">
+            <label for="country_id" class="form-label">Country</label>
+            <select class="w3-input w3-border w3-round form-control select3 @error('country_id') is-invalid @enderror" id="country_id" name="country_id" style="width: 100%;">
               <option></option>
-              <option value="ALGERIA">ALGERIA</option>
+              <option value="">Sélectionnez un pays</option>
+              {{-- <option value="ALGERIA">ALGERIA</option>
               <option value="ANGOLA">ANGOLA</option>
               <option value="BENIN">BENIN</option>
               <option value="BOTSWANA">BOTSWANA</option>
@@ -437,9 +440,9 @@
               <option value="VIETNAM">VIETNAM</option>
               <option value="YEMEN">YEMEN</option>
               <option value="ZAMBIA">ZAMBIA</option>
-              <option value="ZIMBABWE">ZIMBABWE</option>                                            
+              <option value="ZIMBABWE">ZIMBABWE</option>                                             --}}
             </select>
-            @error('country')
+            @error('country_id')
             <div class="text-danger">{{ $message }}</div>
         @enderror
             </div>

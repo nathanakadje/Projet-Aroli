@@ -57,7 +57,41 @@ public function destroy($id)
     return response()->json(['success' => true, 'message' => 'Sender supprimé avec succès']);
 }
 
+
+
+
+// *************************************Edite modal pour modifier enregistrement ***************************
+// Exemple de méthode update dans SenderController
+
+
+public function edit($id)
+{
+    $sender = registries::with(['operator', 'country'])->findOrFail($id);
+    return response()->json($sender);
+}
+
+public function update(Request $request, $id)
+{
+    $sender = registries::findOrFail($id);
     
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'operator_id' => 'nullable|exists:operators,id',
+        'country_id' => 'nullable|exists:countries,id',
+        'status' => 'required|in:valide,pending,close',
+    ]);
+    
+    $sender->update($validated);
+    
+    return response()->json(['message' => 'Enregistrement mis à jour avec succès', 'data' => $sender]);
+}
+
+// ***************************mise à jour conditionnelle*******************************
+
+
+
+
+
     // public function dashboard()
     // {
     //     $user = registries::orderBy('created_at', 'desc')->get();

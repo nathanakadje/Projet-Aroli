@@ -10,12 +10,22 @@ class registries extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'operator',
-        'country',
+        'operator_id',
         'country_id',
         'status',
         'date_sub',
         'date_valid',
         'commentaire'
     ];
+
+    public function operator()
+{
+    return $this->belongsTo(operators::class, 'operator_id');
+}
+
+public function country()
+{
+    return $this->belongsTo(countries::class, 'country_id');
+}
+
 }

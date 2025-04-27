@@ -44,17 +44,52 @@
   </h3>
   </div>
 
-
+{{-- //**************************************************************Formulaire de recherche*********************************** --}}
   <div id="searchWindow" class="search-window">
+    <form action="{{ route('search.searchs') }}" method="POST">
+        @csrf
+        <div class="search-box">
+            <input type="text" name="name" class="form-control" placeholder="Name">
+            
+            <div class="mb-3">
+                <select class="form-control select2" id="operator" name="operator" style="width: 100%;">
+                    <option value="">Sélectionnez un Opérateur</option>
+                </select>     
+            </div>
+            
+            <div class="mb-3">
+                <select class="form-control select2" id="country" name="country" style="width: 100%;">
+                    <option value="">Sélectionnez un Pays</option>
+                </select>
+            </div>
+            
+            <select name="status" class="form-control">
+                <option value="">Select Status</option>
+                <option value="pending">Pending</option>
+                <option value="valide">Valide</option>
+                <option value="close">Rejeté</option>
+            </select>
+            
+            <input type="date" name="start_date" class="form-control" placeholder="Date Debut">
+            <input type="date" name="end_date" class="form-control" placeholder="Date Fin">
+            
+            <button type="submit" class="btn btn-primary mt-3">Search</button>
+            <button id="closeBtn" class="close-btn" type="button">Cancel</button>
+        </div>
+    </form>
+</div>
+
+  {{-- <div id="searchWindow" class="search-window">
         
     <form action="{{ route('search.searchs') }}" method="POST">
         @csrf
         <div class="search-box">
                 <input type="text" name="name" class="form-control" placeholder="Name">
                 {{-- <input type="text" name="operator" class="form-control" placeholder="Operator"> --}}
-                <div class="mb-3">
-                    <select class=" form-control select6" id="operator" name="operator" style="width: 100%;">
-                        <option value="">Operator</option>
+                {{-- <div class="mb-3">
+                    <select class=" form-control select6" id="operator_id" name="operator_id" style="width: 100%;">
+                        <option value="">Sélectionnez un Operateur</option>  --}}
+                        {{-- <option value="">Operator</option>
                         <option value="Algeria Djezzy">Algeria Djezzy</option>
                         <option value="Algeria Mobilis">Algeria Mobilis</option>
                         <option value="Algeria Ooredoo">Algeria Ooredoo</option>
@@ -238,13 +273,13 @@
                         <option value="Benin Mtn">Benin Mtn</option>
                         <option value="Nigeria Mtn">Nigeria Mtn</option>
                         <option value="Benin Moov">Benin Moov</option>
-                        <option value="Benin Sbin">Benin Sbin</option>  
-                    </select>     
+                        <option value="Benin Sbin">Benin Sbin</option>   --}}
+                    {{-- </select>     
                 </div>
                 <div class="mb-3">
-                <select class="w3-input w3-border w3-round form-control select7"  name="country" style="width: 100%;">
-                    <option value=""></option>
-                    <option value="ALGERIA">ALGERIA</option>
+                <select class="w3-input w3-border w3-round form-control select7"  id="country_id" name="country_id" style="width: 100%;">
+                    <option value="">Sélectionnez un Pays</option> --}}
+                    {{-- <option value="ALGERIA">ALGERIA</option>
                     <option value="ANGOLA">ANGOLA</option>
                     <option value="BENIN">BENIN</option>
                     <option value="BOTSWANA">BOTSWANA</option>
@@ -420,8 +455,8 @@
                     <option value="VIETNAM">VIETNAM</option>
                     <option value="YEMEN">YEMEN</option>
                     <option value="ZAMBIA">ZAMBIA</option>
-                    <option value="ZIMBABWE">ZIMBABWE</option>      
-                </select>
+                    <option value="ZIMBABWE">ZIMBABWE</option>       --}}
+                {{-- </select>
             </div>
                 <select name="status" class="form-control">
                     <option value="">Select Status</option>
@@ -436,7 +471,7 @@
         <button id="closeBtn" class="close-btn">Cancel</button>
     </div>
     </form>
-  </div>
+  </div> --}}
 
 
 </div>
@@ -482,8 +517,10 @@
                       <tr>
                           <td>{{ $result->created_at }}</td>
                           <td>{{ $result->name }}</td>
-                          <td>{{ $result->operator }}</td>
-                          <td>{{ $result->country }}</td>
+                          <td>{{ $result->operator_name }}</td> <!-- Nom de l'opérateur -->
+                          <td>{{ $result->country_name }}</td> <!-- Nom du pays -->
+                          {{-- <td>{{ $result->operator }}</td>
+                          <td>{{ $result->country }}</td> --}}
                           <td>
                               @switch($result->status)
                                   @case('close')
@@ -515,10 +552,10 @@
                                 <div class="modal-body">
                                     <!-- Affichez les détails spécifiques à cet enregistrement -->
                                     <p><strong>Name : </strong> {{ $result->name }}</p>
-                                    <p><strong>Operator :</strong>  {{ $result->operator }}</p>
-                                    <p><strong>Country : </strong> {{ $result->country }}</p>
+                                    <p><strong>Operator :</strong>  {{ $result->operator_name }}</p>
+                                    <p><strong>Country : </strong> {{ $result->country_name }}</p>
                                     <p><strong>Updated Date :</strong> {{ \Carbon\Carbon::parse($result->updated_at)->format('d/m/Y H:i')}}</p>
-                                    <p><strong>Commentaire :</strong>  {{ $result->country }}</p>
+                                    <p><strong>Commentaire :</strong>  {{ $result->commentaire }}</p>
                                     <!-- Ajoutez d'autres champs selon vos besoins -->
                                 </div>
                             </div>

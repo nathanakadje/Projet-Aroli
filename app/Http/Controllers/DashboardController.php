@@ -70,7 +70,19 @@ class DashboardController extends Controller
 
 public function getStatusStatistics()
 {
-    $sender = registries::orderBy('created_at', 'desc')->take(5)->get(['created_at', 'name', 'country', 'status', 'date_sub']);
+    // $sender = registries::orderBy('created_at', 'desc')->take(5)->get(['created_at', 'name', 'country', 'status', 'date_sub']);
+   $sender = DB::table('registries')
+    ->join('countries', 'registries.country_id', '=', 'countries.id')
+    ->orderBy('registries.created_at', 'desc')
+    ->take(5)
+    ->select(
+        'registries.created_at',
+        'registries.name',
+        'countries.name as country', // ici on récupère le nom du pays avec alias
+        'registries.status',
+        'registries.date_sub'
+    )
+    ->get();
     // Calculer le nombre total de senders
     $totalSenders = DB::table('registries')->count();
     

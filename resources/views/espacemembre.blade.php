@@ -306,31 +306,601 @@ $(document).ready(function() {
             width: '100%' 
         });
     });
-  function openEditModal(id) {
-    // Récupérer les données de l'enregistrement via AJAX
-    $.ajax({
-        url: '/get-registry-details/' + id,
-        method: 'GET',
-        success: function(data) {
-            // Remplir le formulaire modal avec les données
-            $('#editRecordId').val(data.id);
-            $('#editName').val(data.name);
-            // $('#editOperator').val(data.operator);
-            // $('#editCountry').val(data.country);
-            $('#editStatus').val(data.status);
+
+//   function openEditModal(id) {
+//     // Récupérer les données de l'enregistrement via AJAX
+//     $.ajax({
+//         url: '/get-registry-details/' + id,
+//         method: 'GET',
+//         success: function(data) {
+//             // Remplir le formulaire modal avec les données
+//             $('#editRecordId').val(data.id);
+//             $('#editName').val(data.name);
+//             // $('#editOperator').val(data.operator);
+//             // $('#editCountry').val(data.country);
+//             $('#editStatus').val(data.status);
             
-            // Afficher la modal
-            new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
-        },
-        error: function(xhr) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: 'Erreur lors de la récupération des données'
-            });
+//             // Afficher la modal
+//             new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
+//         },
+//         error: function(xhr) {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Erreur',
+//                 text: 'Erreur lors de la récupération des données'
+//             });
+//         }
+//     });
+// }
+
+//*********************************************Edite modal actioncontroller**************************
+    // function editSender(id) {
+    //     $.ajax({
+    //         url: `/senders/${id}/edit`,
+    //         method: 'GET',
+    //         success: function (data) {
+    //             // Remplir les champs
+    //             $('#sender_id').val(data.id);
+    //             $('#name').val(data.name);
+    //             $('#status').val(data.status);
+
+    //             // Pré-remplir Select2 opérateur
+    //             let operatorOption = new Option(data.operator.name, data.operator.id, true, true);
+    //             $('#operator_id').append(operatorOption).trigger('change');
+
+    //             // Pré-remplir Select2 pays
+    //             let countryOption = new Option(data.country.name, data.country.id, true, true);
+    //             $('#country_id').append(countryOption).trigger('change');
+
+    //             // Afficher la modale
+    //             $('#editSenderModal').modal('show');
+    //         },
+    //         error: function () {
+    //             Swal.fire("Erreur", "Impossible de charger les données du sender.", "error");
+    //         }
+    //     });
+    // }
+//     let originalData = {}; // stocke les valeurs initiales
+
+// function editSender(id) {
+//     $.ajax({
+//         url: `/senders/${id}`,
+//         type: 'GET',
+//         success: function (response) {
+//             // Affiche la modale
+//             $('#editSenderModal').modal('show');
+
+//             // Remplit le formulaire
+//             $('#sender_id').val(response.id);
+//             $('#name').val(response.name);
+//             $('#status').val(response.status);
+//             $('#operator_id').val(response.operator.id).trigger('change');
+//             $('#country_id').val(response.country.id).trigger('change');
+
+//             // Stocke les données originales
+//             originalData = {
+//                 name: response.name,
+//                 status: response.status,
+//                 operator_id: response.operator.id,
+//                 country_id: response.country.id
+//             };
+//         },
+//         error: function () {
+//             Swal.fire('Erreur', 'Impossible de charger les données de l’expéditeur.', 'error');
+//         }
+//     });
+// }
+
+//*************************************Initialisation JavaScript de Select2 AJAX actioncontroller********************
+
+//**********************************************JS pour la soumission du formulaire actioncontroller**********************************
+// $('#editSenderForm').on('submit', function (e) {
+//     e.preventDefault();
+
+//     let id = $('#sender_id').val();
+//     let form = $(this);
+//     let formData = {
+//         name: $('#name').val(),
+//         status: $('#status').val(),
+//         operator_id: $('#operator_id').val(),
+//         country_id: $('#country_id').val(),
+//         _token: '{{ csrf_token() }}',
+//         _method: 'PUT'
+//     };
+
+//     $.ajax({
+//         url: `/senders/${id}`,
+//         type: 'POST',
+//         data: formData,
+//         success: function (response) {
+//             Swal.fire({
+//                 icon: 'success',
+//                 title: 'Succès',
+//                 text: response.message,
+//                 timer: 2000,
+//                 showConfirmButton: false
+//             });
+
+//             $('#editSenderModal').modal('hide');
+
+//             setTimeout(() => {
+//                 location.reload(); // recharge la page après la mise à jour
+//             }, 2000);
+//         },
+//         error: function (xhr) {
+//             let msg = 'Erreur inconnue.';
+//             if (xhr.responseJSON?.message) msg = xhr.responseJSON.message;
+
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Erreur',
+//                 text: msg
+//             });
+//         }
+//     });
+// });
+
+
+// Configuration de select2 et gestion de la modale d'édition
+$(document).ready(function() {
+    // Ajouter le token CSRF à chaque requête AJAX
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-}
+
+    // Initialisation des select2
+    $('#edit_operator_id').select2({
+        dropdownParent: $('#editSenderModal'),
+        placeholder: 'Sélectionnez un opérateur',
+        allowClear: true,
+        ajax: {
+            url: '/operators/search',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search: params.term,
+                    page: params.page || 1
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data.data, function(item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        };
+                    }),
+                    pagination: {
+                        more: data.next_page_url !== null
+                    }
+                };
+            },
+            cache: true
+        }
+    });
+
+    $('#edit_country_id').select2({
+        dropdownParent: $('#editSenderModal'),
+        placeholder: 'Sélectionnez un pays',
+        allowClear: true,
+        ajax: {
+            url: '/countries/search',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search: params.term,
+                    page: params.page || 1
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data.data, function(item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        };
+                    }),
+                    pagination: {
+                        more: data.next_page_url !== null
+                    }
+                };
+            },
+            cache: true
+        }
+    });
+
+    // Variables pour stocker les données originales du formulaire
+    let originalFormData = {};
+
+    // Fonction pour récupérer les données du formulaire actuel
+    function getFormData() {
+        return $('#editSenderForm').serialize();
+    }
+
+    // Fonction pour vérifier si le formulaire a été modifié
+    function isFormModified() {
+        return getFormData() !== originalFormData;
+    }
+
+    // Fonction pour charger les données de l'enregistrement dans la modale
+    window.editSender = function(id) {
+        // Réinitialiser le formulaire avant de charger les nouvelles données
+        $('#editSenderForm')[0].reset();
+        $('#edit_operator_id').empty();
+        $('#edit_country_id').empty();
+
+        // Charger les données de l'enregistrement
+        $.ajax({
+            url: `/actions/${id}/edit`,
+            type: 'GET',
+            success: function(response) {
+                // Définir l'URL du formulaire pour la mise à jour
+                $('#editSenderForm').attr('action', `/senders/${id}`);
+                
+                // Remplir les champs du formulaire
+                $('#edit_sender_id').val(response.id);
+                $('#edit_name').val(response.name);
+                $('#edit_status').val(response.status);
+                
+                // Créer et sélectionner les options pour l'opérateur
+                if (response.operator) {
+                    const operatorOption = new Option(response.operator.name, response.operator.id, true, true);
+                    $('#edit_operator_id').append(operatorOption).trigger('change');
+                }
+                
+                // Créer et sélectionner les options pour le pays
+                if (response.country) {
+                    const countryOption = new Option(response.country.name, response.country.id, true, true);
+                    $('#edit_country_id').append(countryOption).trigger('change');
+                }
+
+                // Stocker les données originales pour comparer plus tard
+                originalFormData = getFormData();
+                
+                // Afficher la modale
+                $('#editSenderModal').modal('show');
+            },
+            error: function(xhr) {
+                console.error('Erreur de récupération:', xhr);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Impossible de récupérer les données de l\'enregistrement'
+                });
+            }
+        });
+    };
+
+    // Gérer la soumission du formulaire
+    $('#editSenderForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Vérifier si le formulaire a été modifié
+        if (!isFormModified()) {
+            // Aucune modification, fermer simplement la modale
+            $('#editSenderModal').modal('hide');
+            Swal.fire({
+                icon: 'info',
+                title: 'Information',
+                text: 'Aucune modification n\'a été effectuée',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            return;
+        }
+        
+        // Obtenir l'URL du formulaire
+        const url = $(this).attr('action');
+        
+        // Soumettre le formulaire via AJAX
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Fermer la modale
+                $('#editSenderModal').modal('hide');
+                
+                // Afficher un message de succès
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: 'L\'enregistrement a été mis à jour avec succès',
+                    timer: 1500,
+                            showConfirmButton: false
+                }).then(function() {
+                    // Recharger la page pour afficher les modifications
+                    window.location.reload();
+                });
+            },
+            error: function(xhr) {
+                // Afficher les erreurs de validation
+                let errorMessage = 'Une erreur est survenue lors de la mise à jour';
+                
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    errorMessage = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    html: errorMessage
+                });
+                
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+//*************************************************** Recherche auto pour mon formulaire d'enregistrement**********************************
+// Initialisation des Select2 pour opérateurs et pays
+$(document).ready(function() {
+    // Ajout du token CSRF pour toutes les requêtes AJAX
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    
+    // Initialisation du Select2 pour les opérateurs
+    $('#operator_id').select2({
+        placeholder: 'Sélectionnez un opérateur',
+        allowClear: true,
+        ajax: {
+            url: '/operators/search',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search: params.term,
+                    page: params.page || 1
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data.data, function(item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        };
+                    }),
+                    pagination: {
+                        more: data.next_page_url !== null
+                    }
+                };
+            },
+            cache: true
+        }
+    });
+    
+    // Initialisation du Select2 pour les pays
+    $('#country_id').select2({
+        placeholder: 'Sélectionnez un pays',
+        allowClear: true,
+        ajax: {
+            url: '/countries/search',
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    search: params.term,
+                    page: params.page || 1
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: $.map(data.data, function(item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        };
+                    }),
+                    pagination: {
+                        more: data.next_page_url !== null
+                    }
+                };
+            },
+            cache: true
+        }
+    });
+    
+    // Gestion de la soumission du formulaire
+    $('#createRegistryForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                // Affichage d'une alerte de succès
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: 'Enregistrement créé avec succès'
+                }).then(function() {
+                    // Redirection vers la liste des enregistrements ou réinitialisation du formulaire
+                    // window.location.href = '/registries'; // Décommentez pour rediriger
+                    $('#createRegistryForm')[0].reset();
+                    $('#operator_id').val(null).trigger('change');
+                    $('#country_id').val(null).trigger('change');
+                });
+            },
+            error: function(xhr) {
+                // Affichage des erreurs de validation
+                let errorMessage = 'Une erreur est survenue lors de l\'enregistrement';
+                
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    errorMessage = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    html: errorMessage
+                });
+                
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+
+//************************************************************************************************************************/
+
+// ****************************************Configuration des Select2 pour le formulaire de recherche********************************
+$(document).ready(function() {
+    // Initialisation du select2 pour les opérateurs
+    $('#operator').select2({
+        placeholder: 'Sélectionnez un Opérateur',
+        allowClear: true,
+        ajax: {
+            url: '{{ route("get.operators") }}',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+    
+    // Initialisation du select2 pour les pays
+    $('#country').select2({
+        placeholder: 'Sélectionnez un Pays',
+        allowClear: true,
+        ajax: {
+            url: '{{ route("get.countries") }}',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        }
+    });
+});
+// $(document).ready(function() {
+//     // Ajout du token CSRF pour toutes les requêtes AJAX
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+    
+//     // Initialisation du Select2 pour les opérateurs
+//     $('#operator_id').select2({
+//         placeholder: 'Sélectionnez un opérateur',
+//         allowClear: true,
+//         ajax: {
+//             url: '/operators/search',
+//             dataType: 'json',
+//             delay: 250,
+//             data: function(params) {
+//                 return {
+//                     search: params.term,
+//                     page: params.page || 1
+//                 };
+//             },
+//             processResults: function(data) {
+//                 return {
+//                     results: $.map(data.data, function(item) {
+//                         return {
+//                             text: item.name,
+//                             id: item.id
+//                         };
+//                     }),
+//                     pagination: {
+//                         more: data.next_page_url !== null
+//                     }
+//                 };
+//             },
+//             cache: true
+//         }
+//     });
+    
+//     // Initialisation du Select2 pour les pays
+//     $('#country_id').select2({
+//         placeholder: 'Sélectionnez un pays',
+//         allowClear: true,
+//         ajax: {
+//             url: '/countries/search',
+//             dataType: 'json',
+//             delay: 250,
+//             data: function(params) {
+//                 return {
+//                     search: params.term,
+//                     page: params.page || 1
+//                 };
+//             },
+//             processResults: function(data) {
+//                 return {
+//                     results: $.map(data.data, function(item) {
+//                         return {
+//                             text: item.name,
+//                             id: item.id
+//                         };
+//                     }),
+//                     pagination: {
+//                         more: data.next_page_url !== null
+//                     }
+//                 };
+//             },
+//             cache: true
+//         }
+//     });
+    
+//     // Gestion du bouton Cancel
+//     $('#closeBtn').on('click', function(e) {
+//         e.preventDefault();
+//         $('#searchWindow').hide();
+//         // Ou autre action pour fermer la fenêtre selon votre UI
+//     });
+    
+//     // Préselection des valeurs si elles existent dans l'URL (pour garder les filtres après recherche)
+//     if (urlParams.has('operator_id')) {
+//         $.ajax({
+//             url: '/operators/' + urlParams.get('operator_id'),
+//             type: 'GET',
+//             dataType: 'json',
+//             success: function(data) {
+//                 // Créer l'option et la sélectionner
+//                 var option = new Option(data.name, data.id, true, true);
+//                 $('#operator_id').append(option).trigger('change');
+//             }
+//         });
+//     }
+    
+//     if (urlParams.has('country_id')) {
+//         $.ajax({
+//             url: '/countries/' + urlParams.get('country_id'),
+//             type: 'GET',
+//             dataType: 'json',
+//             success: function(data) {
+//                 // Créer l'option et la sélectionner
+//                 var option = new Option(data.name, data.id, true, true);
+//                 $('#country_id').append(option).trigger('change');
+//             }
+//         });
+//     }
+// });
+
+// Récupération des paramètres d'URL pour la préselection
+// const urlParams = new URLSearchParams(window.location.search);
+
+//************************************************************************************************************************************
 
 // Fonction de mise à jour
 $('#updateButton').click(function() {
@@ -366,7 +936,7 @@ $('#updateButton').click(function() {
         }
     });
 });
-//Suppr
+//Supprimer un enregistrement
 function deleteUser(id) {
         Swal.fire({
             title: 'Es-tu sûr ?',

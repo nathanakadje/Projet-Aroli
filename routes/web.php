@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchController;
 
@@ -56,7 +58,9 @@ Route::get('/search', [SearchController::class, 'index'])->name('search.index');
 // Route::get('/search/{id}', [SearchController::class, 'show']);
 Route::get('/registry/{id}', [SearchController::class, 'getRegistryDetails']);
 Route::get('/search/{type}', [SearchController::class, 'export'])->name('search.export');
-
+// Dans routes/web.php
+Route::get('/operators', [SearchController::class, 'getOperators'])->name('get.operators');
+Route::get('/countries', [SearchController::class, 'getCountries'])->name('get.countries');
 // **********************************************************************************************
 // Route::get('/actions', [ActionController::class, 'dashboard']);
 Route::get('/actions', [ActionController::class, 'index']);
@@ -65,10 +69,22 @@ Route::get('/actions', [ActionController::class, 'index']);
 // Route::put('/actions/{id}', [ActionController::class, 'update']);
 // Route::delete('/actions/{id}', [ActionController::class, 'destroy']);
 // Route::get('/actions/{type}/exported', [ActionController::class, 'exported'])->name('actions.exported');
-Route::get('/get-registry-details/{id}', [ActionController::class, 'getRegistryDetails']);
+// Route::get('/get-registry-details/{id}', [ActionController::class, 'getRegistryDetails']);
 Route::post('/update-registry', [ActionController::class, 'updateRegistry']);
 Route::delete('/delete-registry/{id}', [ActionController::class, 'deleteRegistry']);
 Route::delete('/senders/{id}', [ActionController::class, 'destroy'])->name('senders.destroy');
+// Route::get('/senders/{id}/edit', [ActionController::class, 'edit'])->name('senders.edit');
+Route::put('/senders/{id}', [ActionController::class, 'update'])->name('senders.update');
+// Route::get('/api/senders/{id}', [ActionController::class, 'show']);
+
+// Route pour mettre à jour un enregistrement
+// Route::put('/senders/{id}', [ActionController::class, 'update']);
+
+Route::get('/actions/{id}/edit', [ActionController::class, 'edit']);
+Route::post('/senders/{id}', [ActionController::class, 'update']);
+Route::get('/operators/search', [OperatorController::class, 'search'])->name('operators.search');
+Route::get('/countries/search', [CountryController::class, 'search'])->name('countries.search');
+
 
 
 // ******************************************************************

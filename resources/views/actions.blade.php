@@ -82,8 +82,10 @@
                         @forelse ($user as $senders)
                         <tr>
                             <td>{{ $senders->name }}</td>
-                            <td>{{ $senders->operator }}</td>
-                            <td>{{ $senders->country }}</td>
+                            {{-- <td>{{ $senders->operator }}</td>
+                            <td>{{ $senders->country }}</td> --}}
+                            <td>{{ $senders->operator->name ?? '' }}</td>
+                            <td>{{ $senders->country->name ?? '' }}</td>
                             <td>
                                 @switch($senders->status)
                                 @case('close')
@@ -101,7 +103,7 @@
                                 <td>{{ \Carbon\Carbon::parse($senders->date_valid)->format('d/m/Y') }}</td> --}}
                         
                                 <td>
-                                    <a href="#" onclick="openEditModal({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(42, 106, 233, 0.822)">Edit</span></a>
+                                    <a href="#" onclick="editSender({{ $senders->id }})"><i class="fa fa-edit text-primary me-3 edit-btn"></i><span style="color: rgba(42, 106, 233, 0.822)">Edit</span></a>
                                     <a href="#" onclick="deleteUser({{ $senders->id }})"><i class="fa fa-trash text-danger me-3 "></i><span style="color: rgba(247, 51, 51, 0.922)">Delete</span></a>
                                
                                 </td>
@@ -118,14 +120,66 @@
                         {{ $user->links() }}
                     </div> 
                             <!-- Pagination -->
-    
+      
+<!-- Modal pour éditer un sender -->
+<div class="modal fade" id="editSenderModal" tabindex="-1" aria-labelledby="editSenderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSenderModalLabel">Modifier l'enregistrement</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="editSenderForm" method="POST">
+          @csrf
+          @method('PUT')
+          <div class="modal-body">
+            <input type="hidden" id="edit_sender_id" name="id">
+            
+            <div class="mb-3">
+              <label for="edit_name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="edit_name" name="name" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_operator_id" class="form-label">Operator</label>
+              <select class="form-control select2" id="edit_operator_id" name="operator_id" style="width: 100%;">
+                <!-- Options seront chargées dynamiquement -->
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_country_id" class="form-label">Country</label>
+              <select class="form-control select2" id="edit_country_id" name="country_id" style="width: 100%;">
+                <!-- Options seront chargées dynamiquement -->
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_status" class="form-label">Statut</label>
+              <select class="form-control" id="edit_status" name="status">
+                <option value="valide">Valide</option>
+                <option value="pending">Pending</option>
+                <option value="close">Rejeté</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-                            <div class="modal fade" id="editDeleteModal" tabindex="-1" aria-labelledby="editDeleteModalLabel" aria-hidden="true">
+    {{-- ///////////////////////////////////////////////////////////////////ORIGINAL///////////////////////////////////////////////////// --}}
+
+                            {{-- <div class="modal fade" id="editDeleteModal" tabindex="-1" aria-labelledby="editDeleteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="editDeleteModalLabel">Edit/Delete Record</h5>
-                                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <form id="editForm">
@@ -529,8 +583,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
+                            </div> --}}
+        {{-- //////////////////////////////////////////////////////////////////////////////////////////// --}}
                    <!-- Fenêtre modale pour l'édition -->
 {{-- <div class="modal" id="editModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

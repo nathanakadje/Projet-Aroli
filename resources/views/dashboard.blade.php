@@ -63,9 +63,10 @@
         <div class="w3-col l4">
           <div class="w3-white w3-round w3-margin-bottom w3-border" style="">
             <header class="w3-padding-large w3-large w3-border-bottom" style="font-weight: 500">Sender Statistics</header>
-            <div class="w3-padding-large" style="height: 188px;position:relative">
+            <div class="w3-padding-large" style="height: 200px;position:relative">
               {{-- <canvas id="chart2"></canvas> --}}
               <canvas id="statusDoughnutChart"></canvas>
+              
             </div>
             <table class="w3-table w3-bordered w3-border-top">
               <tr>
@@ -107,7 +108,8 @@
           <tbody>
           @forelse ($sender as $senders)
           <tr>
-              <td>{{ $senders->created_at->format('d/m/Y H:i') }}</td>
+              {{-- <td>{{ $senders->created_at->format('d/m/Y H:i') }}</td> --}}
+              <td>{{  \Carbon\Carbon::parse($senders->created_at)->format('d/m/Y H:i') }}</td>
               <td>{{ $senders->name }}</td>
               <td>{{ $senders->country }}</td>
               <td>
