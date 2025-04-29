@@ -70,7 +70,7 @@
             </div>
             <table class="w3-table w3-bordered w3-border-top">
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #fba540"></i> Pending </td>
+                <td><i class="fa fa-circle mr-2" style="color: #fba540"></i>  Pending </td>
                 
               </tr>
               <tr>
@@ -78,7 +78,7 @@
                
               </tr>
               <tr>
-                <td><i class="fa fa-circle mr-2" style="color: #e036a7"></i> Rejecte</td>
+                <td><i class="fa fa-circle mr-2" style="color: #e036a7"></i>  Rejecte</td>
                 
               </tr>
               
@@ -135,87 +135,7 @@
   </table>
   </div>  
   </div>
-            {{-- <tr> --}}
-              {{-- <td>
-                <i class="fa fa-image w3-opacity w3-margin-left"></i>
-              </td>
-              <td>Headphone GL</td>
-              <td>$1,840 USD</td>
-              <td>
-                <span class="badge-dot">
-                  <i class="w3-danger"></i> pending </span>
-              </td>
-              <td>10 July 2018</td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-image w3-opacity w3-margin-left"></i>
-              </td>
-              <td>Clasic Shoes</td>
-              <td>$1,520 USD</td>
-              <td>
-                <span class="badge-dot">
-                  <i class="w3-success"></i> completed </span>
-              </td>
-              <td>12 July 2018</td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-image w3-opacity w3-margin-left"></i>
-              </td>
-              <td>Hand Watch</td>
-              <td>$1,620 USD</td>
-              <td>
-                <span class="badge-dot">
-                  <i class="w3-warning"></i> delayed </span>
-              </td>
-              <td>14 July 2018</td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-image w3-opacity w3-margin-left"></i>
-              </td>
-              <td>Hand Camera</td>
-              <td>$2,220 USD</td>
-              <td>
-                <span class="badge-dot">
-                  <i class="w3-info"></i> on schedule </span>
-              </td>
-              <td>16 July 2018</td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-image w3-opacity w3-margin-left"></i>
-              </td>
-              <td>Iphone-X Pro</td>
-              <td>$9,890 USD</td>
-              <td>
-                <span class="badge-dot">
-                  <i class="w3-success"></i> completed </span>
-              </td>
-              <td>17 July 2018</td>
-            </tr>
-            <tr>
-              <td>
-                <i class="fa fa-image w3-opacity w3-margin-left"></i>
-              </td>
-              <td>Ladies Purse</td>
-              <td>$3,420 USD</td>
-              <td>
-                <span class="badge-dot">
-                  <i class="w3-danger"></i> pending </span>
-              </td>
-              <td>18 July 2018</td>
-            </tr>
-
-          </table>
-        </div>
-      </div>
-    </div> --}}
-
-    {{-- <footer class="w3-padding w3-border-top w3-center w3-white w3-margin-top">
-      <span class="w3-opacity">Make By Aroli<span class="w3-text-red"></span> .</span>
-    </footer> --}}
+            
   </div>
 </div>
 

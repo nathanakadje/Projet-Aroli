@@ -111,12 +111,15 @@ public function showForgotPasswordForm()
         ]);
 
         $token = Str::random(64);
-        
-        DB::table('password_reset_tokens')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => Carbon::now()
-        ]);
+
+        // Met à jour ou insère le token pour éviter l'erreur SQL
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $request->email],
+            [
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]
+        );
 
         Mail::send('emails.forgot-password', ['token' => $token], function($message) use($request){
             $message->to($request->email);
@@ -157,39 +160,4 @@ public function showForgotPasswordForm()
 
         return redirect('/login')->with('status', 'Votre mot de passe a été modifié!');
     }
-    // public function sendResetLink(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email|exists:admins,email',
-    //     ], [
-    //         'email.required' => 'L\'email est obligatoire',
-    //         'email.email' => 'Veuillez saisir un email valide',
-    //         'email.exists' => 'Cet email n\'existe pas dans notre base de données',
-    //     ]);
-
-    //     try {
-    //         $token = Str::random(64);
-
-    //         // Supprimer les anciens tokens pour cet email
-    //         DB::table('password_reset_tokens')
-    //             ->where('email', $request->email)
-    //             ->delete();
-
-    //         // Insérer le nouveau token
-    //         DB::table('password_reset_tokens')->insert([
-    //             'email' => $request->email,
-    //             'token' => $token,
-    //             'created_at' => now()
-    //         ]);
-
-    //         // Envoi de l'email
-    //         Mail::to($request->email)->send(new ResetPasswordMail($token, $request->email));
-
-    //         return back()->with('status', 'Nous vous avons envoyé un lien de réinitialisation par email!');
-            
-    //     } catch (\Exception $e) {
-    //         Log::error('Erreur d\'envoi d\'email: ' . $e->getMessage());
-    //         return back()->with('error', 'Une erreur est survenue lors de l\'envoi de l\'email. Veuillez réessayer.');
-    //     }
-    // }
 }

@@ -108,7 +108,7 @@
 
 
   <script>
-    //les selects pour la vue form
+    //les selects pour la vue formulaire
     $(document).ready(function() {
         $('.select2').select2({
             placeholder: "Search an operator",
@@ -133,146 +133,10 @@
         $('#modalContent').html(...);
     });
 });
-
-//   $(document).ready(function() {
-// 	$('.view-details').on('click', function() {
-// 		var id = $(this).data('id');
-
-// 		$.ajax({
-// 			url: '/search' + id ,
-// 			method: 'GET',
-// 			success: function(data) {
-// 				var formattedDate = new Date(data.created_at).toLocaleDateString('fr-FR', {
-// 				year: 'numeric',
-// 				month: 'long', 
-// 				day: 'numeric',
-// 				hour: '2-digit',
-// 				minute: '2-digit'
-// 			});
-// 			var formatted= new Date(data.updated_at).toLocaleDateString('fr-FR', {
-// 				year: 'numeric',
-// 				month: 'long', 
-// 				day: 'numeric',
-// 				hour: '2-digit',
-// 				minute: '2-digit'
-// 			});
-// 				var detailsHtml = `
-// 					<table class="table">
-			
-// 						<tr>
-// 							<th><strong>Name</strong></th>
-// 							<td>${data.name}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Operator</strong></th>
-// 							<td>${data.operator}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Status</strong></th>
-// 							<td>${data.status}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Country</strong></th>
-// 							<td>${data.country}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Created At</strong></th>
-// 							<td>${formattedDate}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Commentaire</strong></th>
-// 							<td>${data.commentaire}</td>
-// 						</tr>
-// 						<tr>
-// 							<th><strong>Updated_At</strong></th>
-// 							<td>${formatted}</td>
-// 						</tr>
-// 					</table>
-// 				`;
-				
-// 				$('#modalDetails').html(detailsHtml);
-// 			},
-// 			error: function() {
-// 				$('#modalDetails').html('<p style="color: red">Error loading details</p>');
-// 			}
-// 		});
-// 	});
-// });
 </script>
 <script>
-  
-  // function openEditModal(id) {
-  //     // Récupérer les données de l'enregistrement via AJAX
-  //     $.ajax({
-  //         url: '/get-registry-details/' + id,
-  //         method: 'GET',
-  //         success: function(data) {
-  //             // Remplir le formulaire modal avec les données
-  //             $('#editRecordId').val(data.id);
-  //             $('#editName').val(data.name);
-  //             $('#editOperator').val(data.operator);
-  //             $('#editCountry').val(data.country);
-  //             $('#editStatus').val(data.status);
-              
-  //             // Afficher la modal
-  //             new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
-  //         },
-  //         error: function(xhr) {
-  //             alert('Erreur lors de la récupération des données');
-  //         }
-  //     });
-  // }
-  
 
-
-  // // Fonction de mise à jour
-  // $('#updateButton').click(function() {
-  //     var formData = $('#editForm').serialize();
-      
-  //     $.ajax({
-  //         url: '/update-registry',
-  //         method: 'POST',
-  //         data: formData,
-  //         success: function(response) {
-  //             if(response.success) {
-  //                 alert('Enregistrement mis à jour avec succès');
-  //                 location.reload(); // Recharger la page pour voir les modifications
-  //             } else {
-  //                 alert('Erreur lors de la mise à jour');
-  //             }
-  //         },
-  //         error: function(xhr) {
-  //             alert('Erreur lors de la mise à jour');
-  //         }
-  //     });
-  // });
-  
-  // // Fonction de suppression
-  // $('#deleteButton').click(function() {
-  //     var id = $('#editRecordId').val();
-      
-  //     if(confirm('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')) {
-  //         $.ajax({
-  //             url: '/delete-registry/' + id,
-  //             method: 'DELETE',
-  //             data: {
-  //                 '_token': '{{ csrf_token() }}'
-  //             },
-  //             success: function(response) {
-  //                 if(response.success) {
-  //                     alert('Enregistrement supprimé avec succès');
-  //                     location.reload(); // Recharger la page
-  //                 } else {
-  //                     alert('Erreur lors de la suppression');
-  //                 }
-  //             },
-  //             error: function(xhr) {
-  //                 alert('Erreur lors de la suppression');
-  //             }
-  //         });
-  //     }
-  // });
-// ********************************************************************************************************
+// ***********************************Les Select2 pour le formulaire d'enregistrement*********************************************************************
 $(document).ready(function() {
         // Appliquer Select2 au champ select
         $('.select4').select2({
@@ -306,139 +170,6 @@ $(document).ready(function() {
             width: '100%' 
         });
     });
-
-//   function openEditModal(id) {
-//     // Récupérer les données de l'enregistrement via AJAX
-//     $.ajax({
-//         url: '/get-registry-details/' + id,
-//         method: 'GET',
-//         success: function(data) {
-//             // Remplir le formulaire modal avec les données
-//             $('#editRecordId').val(data.id);
-//             $('#editName').val(data.name);
-//             // $('#editOperator').val(data.operator);
-//             // $('#editCountry').val(data.country);
-//             $('#editStatus').val(data.status);
-            
-//             // Afficher la modal
-//             new bootstrap.Modal(document.getElementById('editDeleteModal')).show();
-//         },
-//         error: function(xhr) {
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Erreur',
-//                 text: 'Erreur lors de la récupération des données'
-//             });
-//         }
-//     });
-// }
-
-//*********************************************Edite modal actioncontroller**************************
-    // function editSender(id) {
-    //     $.ajax({
-    //         url: `/senders/${id}/edit`,
-    //         method: 'GET',
-    //         success: function (data) {
-    //             // Remplir les champs
-    //             $('#sender_id').val(data.id);
-    //             $('#name').val(data.name);
-    //             $('#status').val(data.status);
-
-    //             // Pré-remplir Select2 opérateur
-    //             let operatorOption = new Option(data.operator.name, data.operator.id, true, true);
-    //             $('#operator_id').append(operatorOption).trigger('change');
-
-    //             // Pré-remplir Select2 pays
-    //             let countryOption = new Option(data.country.name, data.country.id, true, true);
-    //             $('#country_id').append(countryOption).trigger('change');
-
-    //             // Afficher la modale
-    //             $('#editSenderModal').modal('show');
-    //         },
-    //         error: function () {
-    //             Swal.fire("Erreur", "Impossible de charger les données du sender.", "error");
-    //         }
-    //     });
-    // }
-//     let originalData = {}; // stocke les valeurs initiales
-
-// function editSender(id) {
-//     $.ajax({
-//         url: `/senders/${id}`,
-//         type: 'GET',
-//         success: function (response) {
-//             // Affiche la modale
-//             $('#editSenderModal').modal('show');
-
-//             // Remplit le formulaire
-//             $('#sender_id').val(response.id);
-//             $('#name').val(response.name);
-//             $('#status').val(response.status);
-//             $('#operator_id').val(response.operator.id).trigger('change');
-//             $('#country_id').val(response.country.id).trigger('change');
-
-//             // Stocke les données originales
-//             originalData = {
-//                 name: response.name,
-//                 status: response.status,
-//                 operator_id: response.operator.id,
-//                 country_id: response.country.id
-//             };
-//         },
-//         error: function () {
-//             Swal.fire('Erreur', 'Impossible de charger les données de l’expéditeur.', 'error');
-//         }
-//     });
-// }
-
-//*************************************Initialisation JavaScript de Select2 AJAX actioncontroller********************
-
-//**********************************************JS pour la soumission du formulaire actioncontroller**********************************
-// $('#editSenderForm').on('submit', function (e) {
-//     e.preventDefault();
-
-//     let id = $('#sender_id').val();
-//     let form = $(this);
-//     let formData = {
-//         name: $('#name').val(),
-//         status: $('#status').val(),
-//         operator_id: $('#operator_id').val(),
-//         country_id: $('#country_id').val(),
-//         _token: '{{ csrf_token() }}',
-//         _method: 'PUT'
-//     };
-
-//     $.ajax({
-//         url: `/senders/${id}`,
-//         type: 'POST',
-//         data: formData,
-//         success: function (response) {
-//             Swal.fire({
-//                 icon: 'success',
-//                 title: 'Succès',
-//                 text: response.message,
-//                 timer: 2000,
-//                 showConfirmButton: false
-//             });
-
-//             $('#editSenderModal').modal('hide');
-
-//             setTimeout(() => {
-//                 location.reload(); // recharge la page après la mise à jour
-//             }, 2000);
-//         },
-//         error: function (xhr) {
-//             let msg = 'Erreur inconnue.';
-//             if (xhr.responseJSON?.message) msg = xhr.responseJSON.message;
-
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Erreur',
-//                 text: msg
-//             });
-//         }
-//     });
-// });
 
 
 // Configuration de select2 et gestion de la modale d'édition
@@ -638,6 +369,8 @@ $(document).ready(function() {
         });
     });
 });
+
+
 //*************************************************** Recherche auto pour mon formulaire d'enregistrement**********************************
 // Initialisation des Select2 pour opérateurs et pays
 $(document).ready(function() {
@@ -792,115 +525,8 @@ $(document).ready(function() {
         }
     });
 });
-// $(document).ready(function() {
-//     // Ajout du token CSRF pour toutes les requêtes AJAX
-//     $.ajaxSetup({
-//         headers: {
-//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//         }
-//     });
-    
-//     // Initialisation du Select2 pour les opérateurs
-//     $('#operator_id').select2({
-//         placeholder: 'Sélectionnez un opérateur',
-//         allowClear: true,
-//         ajax: {
-//             url: '/operators/search',
-//             dataType: 'json',
-//             delay: 250,
-//             data: function(params) {
-//                 return {
-//                     search: params.term,
-//                     page: params.page || 1
-//                 };
-//             },
-//             processResults: function(data) {
-//                 return {
-//                     results: $.map(data.data, function(item) {
-//                         return {
-//                             text: item.name,
-//                             id: item.id
-//                         };
-//                     }),
-//                     pagination: {
-//                         more: data.next_page_url !== null
-//                     }
-//                 };
-//             },
-//             cache: true
-//         }
-//     });
-    
-//     // Initialisation du Select2 pour les pays
-//     $('#country_id').select2({
-//         placeholder: 'Sélectionnez un pays',
-//         allowClear: true,
-//         ajax: {
-//             url: '/countries/search',
-//             dataType: 'json',
-//             delay: 250,
-//             data: function(params) {
-//                 return {
-//                     search: params.term,
-//                     page: params.page || 1
-//                 };
-//             },
-//             processResults: function(data) {
-//                 return {
-//                     results: $.map(data.data, function(item) {
-//                         return {
-//                             text: item.name,
-//                             id: item.id
-//                         };
-//                     }),
-//                     pagination: {
-//                         more: data.next_page_url !== null
-//                     }
-//                 };
-//             },
-//             cache: true
-//         }
-//     });
-    
-//     // Gestion du bouton Cancel
-//     $('#closeBtn').on('click', function(e) {
-//         e.preventDefault();
-//         $('#searchWindow').hide();
-//         // Ou autre action pour fermer la fenêtre selon votre UI
-//     });
-    
-//     // Préselection des valeurs si elles existent dans l'URL (pour garder les filtres après recherche)
-//     if (urlParams.has('operator_id')) {
-//         $.ajax({
-//             url: '/operators/' + urlParams.get('operator_id'),
-//             type: 'GET',
-//             dataType: 'json',
-//             success: function(data) {
-//                 // Créer l'option et la sélectionner
-//                 var option = new Option(data.name, data.id, true, true);
-//                 $('#operator_id').append(option).trigger('change');
-//             }
-//         });
-//     }
-    
-//     if (urlParams.has('country_id')) {
-//         $.ajax({
-//             url: '/countries/' + urlParams.get('country_id'),
-//             type: 'GET',
-//             dataType: 'json',
-//             success: function(data) {
-//                 // Créer l'option et la sélectionner
-//                 var option = new Option(data.name, data.id, true, true);
-//                 $('#country_id').append(option).trigger('change');
-//             }
-//         });
-//     }
-// });
 
-// Récupération des paramètres d'URL pour la préselection
-// const urlParams = new URLSearchParams(window.location.search);
-
-//************************************************************************************************************************************
+//****************************************************************Les buttons actions du formulaire de modification ********************************************************************
 
 // Fonction de mise à jour
 $('#updateButton').click(function() {
@@ -1029,20 +655,6 @@ $('#deleteButton').click(function() {
 // **********************************************************************************
   
   </script>
-{{-- <script>
-   $(document).ready(function() {
-    $('#recordModal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget); 
-            var recordId = button.data('id'); 
-            
-            // Charge les détails de l'enregistrement via AJAX
-            $.get('/search/' + recordId + '/details', function(data) {
-                $('#recordModal .modal-body').html(data);
-
-            });
-    });
-        });
-</script> --}}
 <!-- Ajoutez ce script à la fin de votre vue, juste avant la fermeture de la balise body -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {

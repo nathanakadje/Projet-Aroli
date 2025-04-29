@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 class ActionController extends Controller
 {
-    // Récupérer les détails d'un enregistrement
+    // Recover the details of a recording
 public function getRegistryDetails($id)
 {
     $registry = registries::findOrFail($id);
     return response()->json($registry);
 }
 
-// Mettre à jour l'enregistrement
+// Update recording
 public function updateRegistry(Request $request)
 {
     $validated = $request->validate([
@@ -36,7 +36,7 @@ public function updateRegistry(Request $request)
     }
 }
 
-// Supprimer l'enregistrement
+// Delete recording
 public function deleteRegistry($id)
 {
     try {
@@ -61,7 +61,7 @@ public function destroy($id)
 
 
 // *************************************Edite modal pour modifier enregistrement ***************************
-// Exemple de méthode update dans SenderController
+//  Example of update method in SenderController
 
 
 public function edit($id)
@@ -86,44 +86,6 @@ public function update(Request $request, $id)
     return response()->json(['message' => 'Enregistrement mis à jour avec succès', 'data' => $sender]);
 }
 
-// ***************************mise à jour conditionnelle*******************************
-
-
-
-
-
-    // public function dashboard()
-    // {
-    //     $user = registries::orderBy('created_at', 'desc')->get();
-       
-    //     return view('actions', compact('user'));
-    // }
-    // public function show($id)
-    // {
-    //     $user = registries::findOrFail($id);
-        
-    //     return response()->json($user);
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-        
-    //     $user = registries::findOrFail($id);
-    //     $user->name = $request->name;
-    //     $user->country = $request->country;
-    //     $user->status = $request->status;
-    //     $user->operator = $request->operator;
-    //     $user->save();
-
-    //     return response()->json(['success' => true]);
-    // }
-    // public function destroy($id)
-    // {
-    //     $user = registries::findOrFail($id);
-    //     $user->delete();
-
-    //     return response()->json(['success' => true]);
-    // }
     public function index()
     {
 
@@ -173,54 +135,5 @@ public function update(Request $request, $id)
     $user = $query->latest()->paginate(15);
     return view('actions', compact('user'))->render();
 }
-
-
-    // private function getFilteredQuery()
-    // {
-    //     $query = registries::query();
-
-    //     if (request()->filled('name')) {
-    //         $query->where('name', 'LIKE', '%' . request('name') . '%');
-    //     }
-
-    //     if (request()->filled('operator')) {
-    //         $query->where('operator', 'LIKE', '%' . request('operator') . '%');
-    //     }
-
-    //     if (request()->filled('country')) {
-    //         $query->where('country', request('country'));
-    //     }
-
-    //     if (request()->filled('status')) {
-    //         $query->where('status', request('status'));
-    //     }
-    //     if (request()->filled('start_date')) {
-    //         $query->whereDate('start_date', request('start_date'));
-    //     }
-    //     if (request()->filled('end_date')) {
-    //         $query->whereDate('end_date', request('end_date'));
-    //     }
-        
-    //     if (request()->filled('updated_at')) {
-    //         $query->whereDate('updated_at', request('updated_at'));
-    //     }    
-
-      
-    //     return $query;
-    // }
-
-    // public  function exported(string $type)
-    // {
-      
-    //     $senders = $this->getFilteredQuery()->get();
-
-    //     $filename = 'sender_export_' . date('Y-m-d_H-i-s');
-
-    //     return match($type) {
-    //                 'excel' => Excel::download(new ActionExport($senders), $filename . '.xlsx'),
-    //                 'csv' => Excel::download(new ActionExport($senders), $filename . '.csv'),
-    //                 default => redirect()->back()->with('error', 'Format d\'export non supporté'),
-    //             };
-    // }
 
 }

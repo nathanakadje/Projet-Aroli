@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="limiter">
-    <div class="container-login100" style="background-image: url('/FrontEnd/images/bg-01.jpg');">
+    <div class="container-login100" style="background-image: url('/FrontEnd/images/bg-02.jpg');">
         <div class="wrap-login100">
             <form class="login100-form validate-form" action="/register/traitement" method="POST">
             @csrf
