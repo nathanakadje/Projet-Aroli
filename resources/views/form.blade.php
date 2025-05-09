@@ -116,7 +116,7 @@
               <label for="date_valid" class="form-label">Validation Date</label>
              
         <input type="date" class="w3-input w3-border w3-round form-control 
-        @error('date_valid') is-invalid @enderror" value="{{ old('date_valid') }}" name="date_valid" max="{{ date('Y-m-d') }}" id="date_valid" placeholder="Enter date">
+        @error('date_valid') is-invalid @enderror" value="{{ old('date_valid') }}" name="date_valid" max="{{ date('Y-m-d') }}" id="date_valid" placeholder="Enter date" >
            @error('date_valid')
         <div class="text-danger">{{ $message }}</div>
     @enderror  
@@ -125,7 +125,7 @@
            
             <div class="w3-margin-bottom">
               <label for="commentaire" class="form-label">Commentaire</label>
-        <textarea  class="w3-input w3-border w3-round w3-round form-control @error('date_valid') is-invalid @enderror" name="commentaire"  placeholder="comment">{{ old('commentaire') }}</textarea>
+        <textarea  id="commentaire" class="w3-input w3-border w3-round w3-round form-control @error('date_valid') is-invalid @enderror" name="commentaire"  placeholder="comment">{{ old('commentaire') }}</textarea>
         @error('commentaire')
         <div class="text-danger">{{ $message }}</div>
     @enderror   
@@ -140,5 +140,68 @@
       </div>
     </div>
     
+    <style>
+      textarea:disabled, input:disabled {
+          background-color: #f2f2f2;
+          cursor: not-allowed;
+      }
+  </style>
+  
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      // Fonction pour gérer l'état des champs en fonction du statut
+      function updateFieldsBasedOnStatus() {
+          const statusSelect = document.getElementById('status');
+          const dateValidField = document.getElementById('date_valid');
+          const commentaireField = document.getElementById('commentaire');
+          
+          // Gérer le champ date_valid
+          if (statusSelect.value === 'pending' || statusSelect.value === 'close') {
+              dateValidField.disabled = true;
+              dateValidField.value = ''; // Effacer la valeur
+          } else {
+              dateValidField.disabled = false;
+          }
+          
+          // Gérer le champ commentaire
+          if (statusSelect.value === 'close') {
+              commentaireField.disabled = false;
+          } else {
+              commentaireField.disabled = true;
+              commentaireField.value = ''; // Effacer la valeur si pas en statut "close"
+          }
+      }
+      
+      // Exécuter la fonction au chargement de la page pour initialiser l'état
+      updateFieldsBasedOnStatus();
+      
+      // Ajouter un écouteur d'événement pour mettre à jour l'état quand le statut change
+      document.getElementById('status').addEventListener('change', updateFieldsBasedOnStatus);
+  });
+  </script>
+    {{-- <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // Fonction pour gérer l'état du champ date_valid en fonction du statut
+          function updateDateValidField() {
+              const statusSelect = document.getElementById('status');
+              const dateValidField = document.getElementById('date_valid');
+              
+              // Si le statut est "pending" ou "close", désactiver le champ date_valid
+              if (statusSelect.value === 'pending' || statusSelect.value === 'close') {
+                  dateValidField.disabled = true;
+                  dateValidField.value = ''; // Effacer la valeur si nécessaire
+              } else {
+                  dateValidField.disabled = false;
+              }
+          }
+          
+          // Exécuter la fonction au chargement de la page pour initialiser l'état
+          updateDateValidField();
+          
+          // Ajouter un écouteur d'événement pour mettre à jour l'état quand le statut change
+          document.getElementById('status').addEventListener('change', updateDateValidField);
+      });
+      </script>
+       --}}
       @endsection
     
